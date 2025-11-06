@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
 	if (!empty($_POST['addBtn'])) 
 	{
-		addUser($_POST['requestedDate'], $_POST['roomNo'], $_POST['requestedBy'], $_POST['requestDesc'], $_POST['priority_option']);
+		addUser($_POST['comp_id'], $_POST['stu_name'], $_POST['phone_number'], $_POST['passwd'], $_POST['school_year'], $_POST['major'], $_POST['bio']);
 		$list_of_requests = getAllRequests();
 	}
 }
@@ -61,19 +61,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         </td>
         <td>
           <div class='mb-3'>
-            Phone Number:
-            <input type='text' class='form-control' id='phone_number' name='phone_number' 
-				   pattern="\d{10}"
-                   value="<?php if ($request_to_update !=null) echo $request_to_update['phone_number']; ?>" />
+            Student Name:
+            <input type='text' class='form-control' id='stu_name' name='stu_name' 
+                   value="<?php if ($request_to_update !=null) echo $request_to_update['stu_name']; ?>" />
           </div>
         </td>
       </tr>
       <tr>
-        <td colspan=2>
+	 	 <td colspan=2>
           <div class='mb-3'>
-            Name: 
-            <input type='text' class='form-control' id='name' name='name'
-                   value="<?php if ($request_to_update !=null) echo $request_to_update['name']; ?>" />
+            Phone Number: 
+            <input type='text' class='form-control' id='phone_number' name='phone_number'
+				   pattern="\d{10}"
+                   value="<?php if ($request_to_update !=null) echo $request_to_update['phone_number']; ?>" />
           </div>
         </td>
       </tr>
@@ -83,6 +83,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             Password:
             <input type='text' class='form-control' id='passwd' name='passwd'
                    value="<?php if ($request_to_update !=null) echo $request_to_update['passwd']; ?>" />
+        </div>
+        </td>
+		<td colspan=2>
+          <div class="mb-3">
+            School Year:
+            <input type='text' class='form-control' id='school_year' name='school_year'
+                   value="<?php if ($request_to_update !=null) echo $request_to_update['school_year']; ?>" />
+        </div>
+        </td>
+		<td colspan=2>
+          <div class="mb-3">
+            Major:
+            <input type='text' class='form-control' id='major' name='major'
+                   value="<?php if ($request_to_update !=null) echo $request_to_update['major']; ?>" />
+        </div>
+        </td>
+		<td colspan=2>
+          <div class="mb-3">
+            Bio:
+            <input type='text' class='form-control' id='bio' name='bio'
+                   value="<?php if ($request_to_update !=null) echo $request_to_update['bio']; ?>" />
         </div>
         </td>
       </tr>
