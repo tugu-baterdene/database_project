@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     </div>  
   </div>
 
-  <form method="post" action="<?php $_SERVER['PHP_SELF'] ?>" onsubmit="return validateInput()">
+  <form method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>" onsubmit="return validateInput()">
     <table style="width:98%">
       <tr>
         <td width="50%">
@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     <div>
   </div>  
 
-  <input type="hidden" name="comp_id" value="<?php echo $_POST['comp_id']; ?>" />
+  
   </form>
 
 </div>
