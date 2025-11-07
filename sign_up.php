@@ -2,21 +2,19 @@
 require('connect-db.php');
 require('sign_up-db.php');
 
-$list_of_requests = getAllRequests();
-// var_dump($list_of_requests);
 $request_to_update = null;
 ?> 
 
-<?php // command center
-if ($_SERVER['REQUEST_METHOD'] == 'POST')
+<?php 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') 	
 {
 	if (!empty($_POST['addBtn'])) 
 	{
-		addUser($_POST['comp_id'], $_POST['stu_name'], $_POST['phone_number'], $_POST['passwd'], $_POST['school_year'], $_POST['major'], $_POST['bio']);
-		$list_of_requests = getAllRequests();
+		addUsers($_POST['comp_id'], $_POST['stu_name'], $_POST['phone_number'], $_POST['passwd'], $_POST['school_year'], $_POST['major'], $_POST['bio']);
 	}
 }
 ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -24,15 +22,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
   <meta charset="utf-8">    
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="author" content="Tugu, Grace, Kundana, Santi">
-  <meta name="description" content="Roommate Connection application for UVA students">
-  <meta name="keywords" content="Roommates, UVA, Students">
+  <meta name="author" content="Upsorn Praphamontripong">
+  <meta name="description" content="Maintenance request form, a small/toy web app for ISP homework assignment, used by CS 3250 (Software Testing)">
+  <meta name="keywords" content="CS 3250, Upsorn, Praphamontripong, Software Testing">
   <link rel="icon" href="https://www.cs.virginia.edu/~up3f/cs3250/images/st-icon.png" type="image/png" />  
   
-  <title>Roommate Connection</title>
+  <title>Maintenance Services</title>
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">  
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">  
-  <link rel="stylesheet" href="sign_up.css">  
+  <link rel="stylesheet" href="maintenance-system.css">  
 </head>
 
 <body>  
@@ -42,10 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
       <h2>Roommate Connection Sign Up</h2>
     </div>  
   </div>
-  
-  <!---------------->
-<body>
-	<?php include('header.php') ?>
 
   <form method="post" action="<?php $_SERVER['PHP_SELF'] ?>" onsubmit="return validateInput()">
     <table style="width:98%">
@@ -54,8 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
           <div class='mb-3'>
             Computing ID:
             <input type='text' class='form-control' 
-                   id='comp_id' name='comp_id' 
-                   pattern="\d{4}-\d{1,2}-\d{1,2}"
+                   id='comp_id' name='comp_id'
 				   />
           </div>
         </td>
@@ -67,53 +60,55 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
           </div>
         </td>
       </tr>
-      <tr>
-	 	 <td colspan=2>
+
+	  <tr>
+        <td width="50%">
           <div class='mb-3'>
             Phone Number: 
             <input type='text' class='form-control' id='phone_number' name='phone_number'
-				   pattern="\d{10}"
                    value="<?php if ($request_to_update !=null) echo $request_to_update['phone_number']; ?>" />
           </div>
         </td>
-      </tr>
-      <tr>
-        <td colspan=2>
-          <div class="mb-3">
+        <td>
+          <div class='mb-3'>
             Password:
             <input type='text' class='form-control' id='passwd' name='passwd'
                    value="<?php if ($request_to_update !=null) echo $request_to_update['passwd']; ?>" />
-        </div>
+          </div>
         </td>
-		<td colspan=2>
-          <div class="mb-3">
-            School Year:
+      </tr>
+	  <tr>
+        <td width="50%">
+          <div class='mb-3'>
+            School Year: 
             <input type='text' class='form-control' id='school_year' name='school_year'
                    value="<?php if ($request_to_update !=null) echo $request_to_update['school_year']; ?>" />
-        </div>
+          </div>
         </td>
-		<td colspan=2>
-          <div class="mb-3">
+        <td>
+          <div class='mb-3'>
             Major:
             <input type='text' class='form-control' id='major' name='major'
                    value="<?php if ($request_to_update !=null) echo $request_to_update['major']; ?>" />
-        </div>
+          </div>
         </td>
-		<td colspan=2>
+      </tr>
+	  <tr>
+        <td colspan=2>
           <div class="mb-3">
             Bio:
             <input type='text' class='form-control' id='bio' name='bio'
                    value="<?php if ($request_to_update !=null) echo $request_to_update['bio']; ?>" />
         </div>
         </td>
-      </tr>
+	  </tr>
     </table>
 
     <div class="row g-3 mx-auto">    
-      <div class="col-4 d-grid ">
+      <div class="col-4 d-grid mx-auto">
       <input type="submit" value="Add" id="addBtn" name="addBtn" class="btn btn-dark"
-           title="Add a user" />                  
-      </div>	    
+           title="Add a User" />                  
+      </div>		    
     </div>  
     <div>
   </div>  
