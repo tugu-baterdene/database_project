@@ -1,0 +1,69 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: white;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #000;
+}
+
+/* HEADER TOP LEFT */
+.header {
+    font-size: 28px;          /* smaller */
+    font-weight: 700;
+    padding: 30px 40px;       /* tighter padding */
+}
+
+/* LOGIN WRAPPER */
+.login-wrapper {
+    text-align: center;
+    margin-top: 90px;         /* reduced from 120 */
+}
+
+/* LOG IN title */
+.login-title {
+    font-size: 46px;          /* smaller but bold */
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+/* Sign up line */
+.signup-line {
+    font-size: 18px;          /* slightly smaller */
+    margin-top: 15px;
+    margin-bottom: 35px;      /* reduced gap */
+}
+
+.signup-line a {
+    color: #4a68ff;
+    text-decoration: none;
+}
+
+/* Form container */
+.login-form {
+    width: 350px;             /* smaller width */
+    margin: 0 auto;
+    text-align: left;
+}
+
+/* Labels */
+.login-form label {
+    font-size: 16px;          /* smaller */
+    margin-bottom: 4px;
+    display: block;
+}
+
+/* Inputs */
+.login-form input {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid black;
+    font-size: 15px;          /* slightly smaller */
+    padding: 8px 0;
+    margin-bottom: 25px;      /* tighter spacing */
+    outline: none;
+}
+
+.login-form input:focus {
+    border-bottom: 2px solid #4a68ff;
+}
