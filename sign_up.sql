@@ -6,4 +6,5 @@ CREATE TABLE users (
     school_year INT,
     major VARCHAR(50),
     bio VARCHAR(300),
+    status VARCHAR(20) DEFAULT 'searching',
     PRIMARY KEY (comp_id));
