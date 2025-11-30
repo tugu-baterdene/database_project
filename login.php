@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 	$user = verifyLogin($_POST['comp_id'], $_POST['passwd']);
 
 		if ($user) {
-			header("Location: profile.php");
+			header("Location: search.php");
 			exit();
 		} else {
 			echo "Invalid ID or password.";
