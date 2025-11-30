@@ -24,6 +24,25 @@ function addUsers($comp_id, $stu_name, $phone_number, $passwd)
 	}
 }
 
+function verifyLogin($comp_id, $passwd)
+{
+	global $db;
+	$query = "SELECT * FROM users 
+              WHERE comp_id = :comp_id 
+              AND passwd = :passwd";
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':comp_id', $comp_id);
+    $statement->bindValue(':passwd', $passwd);
+    $statement->execute();
+
+    // Fetch user if exists
+    $result = $statement->fetch(PDO::FETCH_ASSOC);
+    $statement->closeCursor();
+
+    return $result;
+}
+
 function getAllUsers()
 {
     global $db;

@@ -6,32 +6,32 @@ body {
     color: #000;
 }
 
-/* HEADER TOP LEFT */
+/* HEADER */
 .header {
-    font-size: 28px;          /* smaller */
+    font-size: 26px;          /* medium size */
     font-weight: 700;
-    padding: 30px 40px;       /* tighter padding */
+    padding: 25px 35px;       /* medium padding */
 }
 
 /* LOGIN WRAPPER */
 .login-wrapper {
     text-align: center;
-    margin-top: 90px;         /* reduced from 120 */
+    margin-top: 75px;         /* medium top margin */
 }
 
-/* LOG IN title */
+/* LOG IN TITLE */
 .login-title {
-    font-size: 46px;          /* smaller but bold */
+    font-size: 42px;          /* medium size */
     font-weight: 700;
-    margin: 0;
+    margin: 0 0 12px 0;
     letter-spacing: 0.5px;
 }
 
 /* Sign up line */
 .signup-line {
-    font-size: 18px;          /* slightly smaller */
-    margin-top: 15px;
-    margin-bottom: 35px;      /* reduced gap */
+    font-size: 17px;          /* medium font size */
+    margin-top: 12px;
+    margin-bottom: 28px;      /* medium gap */
 }
 
 .signup-line a {
@@ -41,29 +41,58 @@ body {
 
 /* Form container */
 .login-form {
-    width: 350px;             /* smaller width */
+    width: 85%;               /* slightly wider, responsive */
+    max-width: 320px;         /* medium max width */
     margin: 0 auto;
     text-align: left;
 }
 
 /* Labels */
 .login-form label {
-    font-size: 16px;          /* smaller */
+    font-size: 15px;          /* medium size */
     margin-bottom: 4px;
     display: block;
 }
 
 /* Inputs */
-.login-form input {
+.login-form input[type="text"],
+.login-form input[type="password"] {
     width: 100%;
     border: none;
     border-bottom: 2px solid black;
-    font-size: 15px;          /* slightly smaller */
-    padding: 8px 0;
-    margin-bottom: 25px;      /* tighter spacing */
+    font-size: 15px;          /* medium text */
+    padding: 7px 0;           /* medium padding */
+    margin-bottom: 22px;      /* medium spacing */
     outline: none;
 }
 
 .login-form input:focus {
     border-bottom: 2px solid #4a68ff;
+}
+
+/* Button container */
+.login-button {
+    width: 100%;
+    text-align: center;
+    margin-top: 12px;         /* medium spacing */
+}
+
+/* Login button */
+.login-button input[type="submit"] {
+    width: 70%;               /* medium width */
+    max-width: 220px;         /* medium max width */
+    padding: 12px;            /* medium padding */
+    background-color: #6c82ff;
+    color: white;
+    font-weight: 600;
+    font-size: 15px;          /* medium font */
+    border: none;
+    border-radius: 22px;      /* medium radius */
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;           /* center button */
+}
+
+.login-button input[type="submit"]:hover {
+    background-color: #5566cc;
 }

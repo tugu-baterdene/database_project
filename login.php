@@ -1,3 +1,24 @@
+<?php 
+require('connect-db.php');
+require('sign_up-db.php');
+
+$request_to_update = null;
+?> 
+
+<?php 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') 	
+{
+	$user = verifyLogin($_POST['comp_id'], $_POST['passwd']);
+
+		if ($user) {
+			header("Location: profile.php");
+			exit();
+		} else {
+			echo "Invalid ID or password.";
+		}
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,26 +27,29 @@
     <link rel="stylesheet" href="login.css">
 </head>
 
-<body>
+<body>  
+  <div class="header">Roommate Connections</div>
 
-    <div class="header">Roommate Connections</div>
+  <div class="login-wrapper"> 
+		<h1 class="login-title">LOG IN</h1> 
+		<p class="signup-line"> Don't have an account? 
+			<a href="sign_up.php">Sign In</a> 
+		</p> 
 
-    <div class="login-wrapper">
-        <h1 class="login-title">LOG IN</h1>
+  		<form method="post" class="login-form" action="<?php echo $_SERVER['PHP_SELF'] ?>" onsubmit="return validateInput()">
 
-        <p class="signup-line">
-            Don't have an account?
-            <a href="sign_up.php">Sign up</a>
-        </p>
+			<label>Computing ID</label> 
+			<input type='text' 
+				id='comp_id' name='comp_id' required/>
+			
+			<label>Password</label> 
+			<input type='password' class='form-control' id='passwd' name='passwd'
+				value="<?php if ($request_to_update !=null) echo $request_to_update['passwd']; ?>" />
 
-        <form class="login-form" method="POST">
-            <label>Computing ID</label>
-            <input type="text" name="computing_id">
-
-            <label>Password</label>
-            <input type="password" name="password">
-        </form>
-    </div>
-
+			<div class="login-button"> 
+				<input type="submit" value="LOG IN" id="login" name="login" />    
+			</div>
+		</form> 
+	</div>
 </body>
 </html>
