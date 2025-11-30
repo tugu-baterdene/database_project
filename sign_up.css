@@ -1,46 +1,98 @@
-.disabled { background-color: lightgray; color:silver; border-radius: 4px; padding: 4px 10px 4px 10px; }
-.enabled { background-color: black; color:white; border-radius: 4px; padding: 4px 10px 4px 10px; }
-
-.smallbr { font-size:15%; display: block;}
-
-.msg { color:crimson; font-style:italic; }
-.cofm-msg { color:darkgreen; font-style:italic; }
-
-.need-attention { border: 1px solid crimson; } 
-
 body {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+    margin: 0;
+    padding: 0;
+    background: white;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #000;
 }
 
-html,
-body {
-  height: 100%;
+/* HEADER TOP LEFT */
+.header {
+    font-size: 26px;          /* medium size */
+    font-weight: 700;
+    padding: 25px 35px;       /* medium padding */
 }
 
-footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 6.5rem;            /* Footer height */
-  /* font-size: 90%; */
+/* SIGN IN WRAPPER */
+.signin-wrapper {
+    text-align: center;
+    margin-top: 75px;         /* medium top margin */
 }
 
-#page-container {
-  position: relative;  /* absolute;  */
-  min-height: 100vh;
-  width: 100%;
+/* SIGN IN title */
+.signin-title {
+    font-size: 42px;          /* between large and small */
+    font-weight: 700;
+    margin: 0 0 12px 0;
+    letter-spacing: 0.5px;
 }
-    
-#content-wrap {
-  padding-bottom: 6.5rem;    /* Footer height */
+
+/* login line */
+.login-line {
+    font-size: 17px;          /* medium size */
+    margin-top: 12px;
+    margin-bottom: 28px;      /* medium gap */
 }
-    
-.cropped-img { 
-  width: 200px; /* width of container */
-  height: 2px; /* height of container */
-  border: 1px solid black;
-  object-fit: cover;
-  object-position: 100% 50%;
+
+.login-line a {
+    color: #4a68ff;
+    text-decoration: none;
+}
+
+/* Form container */
+.signin-form {
+    width: 85%;               /* slightly wider than very small version */
+    max-width: 320px;         /* medium max width */
+    margin: 0 auto;
+    text-align: left;
+}
+
+/* Labels */
+.signin-form label {
+    font-size: 15px;          /* medium label font */
+    margin-bottom: 4px;
+    display: block;
+}
+
+/* Inputs */
+.signin-form input[type="text"],
+.signin-form input[type="password"] {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid black;
+    font-size: 15px;          /* medium text size */
+    padding: 7px 0;           /* medium padding */
+    margin-bottom: 22px;      /* medium spacing */
+    outline: none;
+}
+
+.signin-form input:focus {
+    border-bottom: 2px solid #4a68ff;
+}
+
+/* Button container */
+.signin-button {
+    width: 100%;              
+    text-align: center;
+    margin-top: 12px;         /* medium margin */
+}
+
+/* Submit button */
+.signin-button input[type="submit"] {
+    width: 70%;               /* medium width */
+    max-width: 220px;         /* medium max width */
+    padding: 12px;            /* medium padding */
+    background-color: #6c82ff;
+    color: white;
+    font-weight: 600;
+    font-size: 15px;          /* medium font */
+    border: none;
+    border-radius: 22px;      /* medium radius */
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;           /* center button */
+}
+
+.signin-button input[type="submit"]:hover {
+    background-color: #5566cc;
 }

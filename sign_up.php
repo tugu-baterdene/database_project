@@ -19,111 +19,42 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">    
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="author" content="Upsorn Praphamontripong">
-  <meta name="description" content="Maintenance request form, a small/toy web app for ISP homework assignment, used by CS 3250 (Software Testing)">
-  <meta name="keywords" content="CS 3250, Upsorn, Praphamontripong, Software Testing">
-  <link rel="icon" href="https://www.cs.virginia.edu/~up3f/cs3250/images/st-icon.png" type="image/png" />  
-  
-  <title>Maintenance Services</title>
-  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">  
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">  
-  <link rel="stylesheet" href="maintenance-system.css">  
+    <meta charset="UTF-8">
+    <title>Roommate Connections – Sign In</title>
+    <link rel="stylesheet" href="sign_up.css">
 </head>
 
 <body>  
-<div class="container">
-  <div class="row g-3 mt-2">
-    <div class="col">
-      <h2>Roommate Connection Sign Up</h2>
-    </div>  
-  </div>
+  <div class="header">Roommate Connections</div>
 
-  <form method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>" onsubmit="return validateInput()">
-    <table style="width:98%">
-      <tr>
-        <td width="50%">
-          <div class='mb-3'>
-            Computing ID:
-            <input type='text' class='form-control' 
-                   id='comp_id' name='comp_id'
-				   />
-          </div>
-        </td>
-        <td>
-          <div class='mb-3'>
-            Student Name:
-            <input type='text' class='form-control' id='stu_name' name='stu_name' 
-                   value="<?php if ($request_to_update !=null) echo $request_to_update['stu_name']; ?>" />
-          </div>
-        </td>
-      </tr>
+  <div class="signin-wrapper"> 
+		<h1 class="signin-title">SIGN IN</h1> 
+		<p class="login-line"> Have an account? 
+			<a href="login.php">Log in</a> 
+		</p> 
 
-	  <tr>
-        <td width="50%">
-          <div class='mb-3'>
-            Phone Number: 
-            <input type='text' class='form-control' id='phone_number' name='phone_number'
-                   value="<?php if ($request_to_update !=null) echo $request_to_update['phone_number']; ?>" />
-          </div>
-        </td>
-        <td>
-          <div class='mb-3'>
-            Password:
-            <input type='text' class='form-control' id='passwd' name='passwd'
-                   value="<?php if ($request_to_update !=null) echo $request_to_update['passwd']; ?>" />
-          </div>
-        </td>
-      </tr>
-	  <tr>
-        <td width="50%">
-          <div class='mb-3'>
-            School Year: 
-            <input type='text' class='form-control' id='school_year' name='school_year'
-                   value="<?php if ($request_to_update !=null) echo $request_to_update['school_year']; ?>" />
-          </div>
-        </td>
-        <td>
-          <div class='mb-3'>
-            Major:
-            <input type='text' class='form-control' id='major' name='major'
-                   value="<?php if ($request_to_update !=null) echo $request_to_update['major']; ?>" />
-          </div>
-        </td>
-      </tr>
-	  <tr>
-        <td colspan=2>
-          <div class="mb-3">
-            Bio:
-            <input type='text' class='form-control' id='bio' name='bio'
-                   value="<?php if ($request_to_update !=null) echo $request_to_update['bio']; ?>" />
-        </div>
-        </td>
-	  </tr>
-    </table>
+  		<form method="post" class="signin-form" action="<?php echo $_SERVER['PHP_SELF'] ?>" onsubmit="return validateInput()">
 
-    <div class="row g-3 mx-auto">    
-      <div class="col-4 d-grid mx-auto">
-      <input type="submit" value="Add" id="addBtn" name="addBtn" class="btn btn-dark"
-           title="Add a User" />                  
-      </div>		    
-    </div>  
-    <div>
-  </div>  
+			<label>Computing ID</label> 
+			<input type='text' 
+				id='comp_id' name='comp_id' required/>
+			
+			<label>Password</label> 
+			<input type='password' class='form-control' id='passwd' name='passwd'
+				value="<?php if ($request_to_update !=null) echo $request_to_update['passwd']; ?>" />
 
-  
-  </form>
+			<label>First and Last Name</label> 
+			<input type='text' class='form-control' id='stu_name' name='stu_name' 
+				value="<?php if ($request_to_update !=null) echo $request_to_update['stu_name']; ?>" />
 
-</div>
+			<label>Phone Number</label> 
+			<input type='text' class='form-control' id='phone_number' name='phone_number'
+				value="<?php if ($request_to_update !=null) echo $request_to_update['phone_number']; ?>" />
 
-<br/><br/>
-
-<?php // include('footer.html') ?> 
-
-<!-- <script src='maintenance-system.js'></script> -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
+			<div class="signin-button"> 
+				<input type="submit" value="CREATE ACCOUNT" id="addBtn" name="addBtn" title="Add a User" />    
+			</div>
+		</form> 
+	</div>
 </body>
 </html>

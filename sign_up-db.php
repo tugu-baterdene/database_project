@@ -1,24 +1,18 @@
 <?php
-function addUsers($comp_id, $stu_name, $phone_number, $passwd, $school_year, $major, $bio)
+function addUsers($comp_id, $stu_name, $phone_number, $passwd)
 {
 	global $db; 
 	$query = "INSERT INTO users
           SET comp_id = :comp_id,
               stu_name = :stu_name,
               phone_number = :phone_number,
-              passwd = :passwd,
-              school_year = :school_year,
-              major = :major,
-              bio = :bio";
+              passwd = :passwd";
 	try {
 		$statement = $db->prepare($query);
         $statement->bindValue(':comp_id', $comp_id); 
         $statement->bindValue(':stu_name', $stu_name); 
         $statement->bindValue(':phone_number', $phone_number); 
         $statement->bindValue(':passwd', $passwd);
-        $statement->bindValue(':school_year', $school_year);
-        $statement->bindValue(':major', $major);
-        $statement->bindValue(':bio', $bio);
         $statement->execute();
         $statement->closeCursor();
 	}
@@ -28,7 +22,6 @@ function addUsers($comp_id, $stu_name, $phone_number, $passwd, $school_year, $ma
 	catch (Exception $e) {
 		echo $e->getMessage(); 
 	}
-
 }
 
 function getAllUsers()
