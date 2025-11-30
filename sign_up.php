@@ -10,7 +10,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
 	if (!empty($_POST['addBtn'])) 
 	{
-		addUsers($_POST['comp_id'], $_POST['stu_name'], $_POST['phone_number'], $_POST['passwd'], $_POST['school_year'], $_POST['major'], $_POST['bio']);
+		addUsers($_POST['comp_id'], $_POST['stu_name'], $_POST['phone_number'], $_POST['passwd']);
+		header("Location: profile.php");
+		exit();
 	}
 }
 ?>
