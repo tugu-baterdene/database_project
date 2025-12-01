@@ -1,9 +1,9 @@
 <?php
 function fetchUser($user_id)
 {
-	global $db3;
+	global $db;
 	$query = "SELECT comp_id, stu_name, phone_number, passwd, school_year, major, bio FROM users WHERE comp_id = :user_id";
-	$stmt = $db3->prepare($query);
+	$stmt = $db->prepare($query);
 	$stmt->bindParam(':user_id', $user_id);
 	$stmt->execute();
 
@@ -13,7 +13,7 @@ function fetchUser($user_id)
 
 function getRequestById($user_id)  
 {
-	global $db3;
+	global $db;
     $query = "SELECT * FROM users WHERE comp_id = :user_id";
     $statement = $db->prepare($query);
     $statement->bindValue(':user_id', $user_id); // $reqId is from the parameter --> more safe
@@ -27,7 +27,7 @@ function getRequestById($user_id)
 
 function updateUser($user_id, $stu_name, $phone_number, $school_year, $major, $bio)
 {
-	global $db3; 
+	global $db; 
 	$query = "UPDATE users 
 			SET stu_name =:stu_name, 
 				phone_number=:phone_number, 
@@ -35,7 +35,7 @@ function updateUser($user_id, $stu_name, $phone_number, $school_year, $major, $b
 				major=:major, 
 				bio=:bio
 				WHERE comp_id =:user_id";
-    $statement = $db3->prepare($query);
+    $statement = $db->prepare($query);
 	$statement->bindValue(':user_id', $user_id);
     $statement->bindValue(':stu_name', $stu_name); 
     $statement->bindValue(':phone_number', $phone_number); 
@@ -48,7 +48,7 @@ function updateUser($user_id, $stu_name, $phone_number, $school_year, $major, $b
 
 function updateLogin($user_id, $stu_name, $phone_number, $passwd, $school_year, $major, $bio)
 {
-	global $db3; 
+	global $db; 
 	$query = "UPDATE users 
 			SET stu_name =:stu_name, 
 				phone_number=:phone_number, 
@@ -57,7 +57,7 @@ function updateLogin($user_id, $stu_name, $phone_number, $passwd, $school_year, 
 				major=:major, 
 				bio=:bio
 				WHERE comp_id =:user_id";
-    $statement = $db3->prepare($query);
+    $statement = $db->prepare($query);
 	$statement->bindValue(':user_id', $user_id);
     $statement->bindValue(':stu_name', $stu_name); 
     $statement->bindValue(':phone_number', $phone_number); 
@@ -71,9 +71,9 @@ function updateLogin($user_id, $stu_name, $phone_number, $passwd, $school_year, 
 
 function updatePref()
 {
-    global $db3;
+    global $db;
 	$query = "SELECT * FROM users";
-	$statement = $db3->prepare($query);
+	$statement = $db->prepare($query);
 	$statement->execute();
 	$results = $statement->fetchAll(); // fetch() gets only onw row; fetchAll() gets all rows
 	$statement->closeCursor();
@@ -82,7 +82,7 @@ function updatePref()
 
 function getAllUsers()
 {
-    global $db3;
+    global $db;
 	$query = "SELECT * FROM users";
 	$statement = $db3->prepare($query);
 	$statement->execute();
