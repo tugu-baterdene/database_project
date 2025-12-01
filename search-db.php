@@ -1,4 +1,16 @@
 <?php
+function fetchUser($user_id)
+{
+	global $db;
+	$query = "SELECT comp_id, stu_name, phone_number, passwd, school_year, major, bio FROM users WHERE comp_id = :user_id";
+	$stmt = $db->prepare($query);
+	$stmt->bindParam(':user_id', $user_id);
+	$stmt->execute();
+
+	$user = $stmt->fetch(PDO::FETCH_ASSOC); // $user now contains user's info
+	return $user;
+}
+
 function searchUsers($name_filter, $year_filter, $major_filter, $status_filter)
 {
     global $db;
