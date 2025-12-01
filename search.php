@@ -3,14 +3,6 @@ require('connect-db.php');
 require('search-db.php');
 include('header.php');
 
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit();
-} 
-
-$user_id = $_SESSION['user_id'];
-$user = fetchUser($user_id);
-
 $results = [];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
