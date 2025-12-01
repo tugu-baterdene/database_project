@@ -11,6 +11,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 	if (!empty($_POST['addBtn'])) 
 	{
 		addUsers($_POST['comp_id'], $_POST['stu_name'], $_POST['phone_number'], $_POST['passwd']);
+		session_start(); 
+		$_SESSION['user_id'] = $_POST['comp_id'];
+		echo "Welcome, " . $_SESSION['user_id'] . "!";
 		header("Location: profile.php");
 		exit();
 	}

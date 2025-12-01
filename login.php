@@ -11,6 +11,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 	$user = verifyLogin($_POST['comp_id'], $_POST['passwd']);
 
 		if ($user) {
+			session_start(); // starts session as user and stores it
+			$_SESSION['user_id'] = $_POST['comp_id'];
+			echo "Welcome, " . $_SESSION['user_id'] . "!";
 			header("Location: search.php");
 			exit();
 		} else {
