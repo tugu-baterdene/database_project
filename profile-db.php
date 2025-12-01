@@ -84,7 +84,7 @@ function getAllUsers()
 {
     global $db;
 	$query = "SELECT * FROM users";
-	$statement = $db3->prepare($query);
+	$statement = $db->prepare($query);
 	$statement->execute();
 	$results = $statement->fetchAll(); // fetch() gets only onw row; fetchAll() gets all rows
 	$statement->closeCursor();
