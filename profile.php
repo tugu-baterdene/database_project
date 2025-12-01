@@ -11,6 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 $user = fetchUser($user_id);
+$pref = fetchPref($user_id);
 // echo "Still signed in as user";
 ?>
 
@@ -19,23 +20,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
 	if (!empty($_POST['saveUser'])) 
 	{
-		// debug the update Login for password to be stored
 		if (!empty($_POST['verify_passwd']) && $_POST['verify_passwd'] === $_POST['passwd']) {
 			updateLogin($user_id, $_POST['stu_name'], $_POST['phone_number'], $_POST['passwd'], $_POST['school_year'], $_POST['major'], $_POST['bio']);
-			// $request_to_update = getRequestById($user_id);
-			// header("Location: profile.php");
-    		// exit();
+			$request_to_update = getRequestById($user_id);
+			$user = fetchUser($user_id);
 		}
 		else {
 			updateUser($user_id, $_POST['stu_name'], $_POST['phone_number'], $_POST['school_year'], $_POST['major'], $_POST['bio']);
 			$request_to_update = getRequestById($user_id);
-			header("Location: profile.php");
-    		exit();
+			$user = fetchUser($user_id);
 		}
 	}
-	else if (!empty($_POST['savePref'])) 
+	if (!empty($_POST['savePref'])) 
 	{
-		addUsers($_POST['comp_id'], $_POST['stu_name'], $_POST['phone_number'], $_POST['passwd'], $_POST['school_year'], $_POST['major'], $_POST['bio']);
+		updatePref($user_id, $_POST['on_off'], $_POST['sleep'], $_POST['num_roommates'], $_POST['drinking'], $_POST['smoking'], $_POST['pets'], $_POST['budget']);
+		$pref_to_update = getPrefById($user_id);
+		$pref = fetchPref($user_id);
 	}
 }
 ?>
@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="tab3-tab" data-bs-toggle="tab"
                                 data-bs-target="#tab3" type="button" role="tab">
-                            Settings
+                            Location
                         </button>
                     </li>
                 </ul>
@@ -210,12 +210,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                                     <select class="form-control" id='on_off' name='on_off'>
 										<option selected></option>
 										<option value='On'
-											<?php if ($user['on_off'] == 'On') 
+											<?php if ($pref['on_off_grounds'] == 'On') 
 												echo ' selected="selected"'?> 
 											>
 											On Grounds</option>
 										<option value='Off'
-											<?php if ($user['on_off'] == 'Off') 
+											<?php if ($pref['on_off_grounds'] == 'Off') 
 												echo ' selected="selected"'?> 
 											>
 											Off Grounds</option>
@@ -226,12 +226,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                                     <select class="form-control" id='pets' name='pets'>
 										<option selected></option>
 										<option value='Yes'
-											<?php if ($user['pets'] == 'Yes') 
+											<?php if ($pref['pets'] == 'Yes') 
 												echo ' selected="selected"'?> 
 											>
 											Yes</option>
 										<option value='No'
-											<?php if ($user['pets'] == 'No') 
+											<?php if ($pref['pets'] == 'No') 
 												echo ' selected="selected"'?> 
 											>
 											No</option>
@@ -244,12 +244,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                                     <select class="form-control" id='drinking' name='drinking'>
 										<option selected></option>
 										<option value='Yes'
-											<?php if ($user['drinking'] == 'Yes') 
+											<?php if ($pref['drinking'] == 'Yes') 
 												echo ' selected="selected"'?> 
 											>
 											Yes</option>
 										<option value='No'
-											<?php if ($user['drinking'] == 'No') 
+											<?php if ($pref['drinking'] == 'No') 
 												echo ' selected="selected"'?> 
 											>
 											No</option>
@@ -260,12 +260,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                                     <select class="form-control" id='smoking' name='smoking'>
 										<option selected></option>
 										<option value='Yes'
-											<?php if ($user['smoking'] == 'Yes') 
+											<?php if ($pref['smoking'] == 'Yes') 
 												echo ' selected="selected"'?> 
 											>
 											Yes</option>
 										<option value='No'
-											<?php if ($user['smoking'] == 'No') 
+											<?php if ($pref['smoking'] == 'No') 
 												echo ' selected="selected"'?> 
 											>
 											No</option>
@@ -276,19 +276,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                                 <div class="col-md-6">
                                     <label>Desired Number of Roommates</label>
                                     <input type="text" class="form-control" id='num_roommates' name='num_roommates'
-										value="<?php echo htmlspecialchars($user['num_roommates']); ?>" />
+										value="<?php if ($pref['num_of_roommates'] !=null) echo $pref['num_of_roommates']; ?>" />
                                 </div>
                                 <div class="col-md-6">
                                     <label>Budget</label>
                                     <input type="text" class="form-control" id='budget' name='budget'
-										value="<?php echo htmlspecialchars($user['budget']); ?>" />
+										value="<?php if ($pref['budget'] !=null) echo $pref['budget']; ?>" />
                                 </div>
                             </div>
 							<div class="row mb-3">
                                 <div class="col-md-12">
                                     <label>Sleeping Habits/Preferences</label>
                                     <input type="text" class="form-control" id='sleep' name='sleep'
-										value="<?php echo htmlspecialchars($user['sleep']); ?>" />
+										value="<?php if ($pref['sleeping'] !=null) echo $pref['sleeping']; ?>" />
                                 </div>
                             </div>
 
@@ -300,8 +300,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
                     <!-- TAB 3 CONTENT -->
                     <div class="tab-pane fade" id="tab3" role="tabpanel">
-                        <h4>Tab 3 Content</h4>
-                        <p>This is where Tab 3 information goes.</p>
+                        <h4>Location(?)</h4>
+                        <p>This is where Location and Landlord information goes(?)</p>
                     </div>
 
                 </div>

@@ -11,6 +11,18 @@ function fetchUser($user_id)
 	return $user;
 }
 
+function fetchPref($user_id)
+{
+	global $db;
+	$query = "SELECT * FROM preferences WHERE comp_id = :user_id";
+	$stmt = $db->prepare($query);
+	$stmt->bindParam(':user_id', $user_id);
+	$stmt->execute();
+
+	$pref = $stmt->fetch(PDO::FETCH_ASSOC);
+	return $pref;
+}
+
 function getRequestById($user_id)  
 {
 	global $db;
@@ -23,6 +35,19 @@ function getRequestById($user_id)
 	
 	return $results;
 
+}
+
+function getPrefById($user_id)  
+{
+	global $db;
+    $query = "SELECT * FROM preferences WHERE comp_id = :user_id";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':user_id', $user_id);
+    $statement->execute();
+	$results = $statement->fetch();
+    $statement->closeCursor();
+	
+	return $results;
 }
 
 function updateUser($user_id, $stu_name, $phone_number, $school_year, $major, $bio)
@@ -69,15 +94,29 @@ function updateLogin($user_id, $stu_name, $phone_number, $passwd, $school_year, 
     $statement->closeCursor();
 }
 
-function updatePref()
+function updatePref($user_id, $on_off, $sleep, $num_roommates, $drinking, $smoking, $pets, $budget)
 {
-    global $db;
-	$query = "SELECT * FROM users";
-	$statement = $db->prepare($query);
-	$statement->execute();
-	$results = $statement->fetchAll(); // fetch() gets only onw row; fetchAll() gets all rows
-	$statement->closeCursor();
-	return $results;
+    global $db; 
+	$query = "UPDATE preferences 
+			SET on_off_grounds=:on_off, 
+				sleeping=:sleep, 
+				num_of_roommates=:num_roommates, 
+				drinking=:drinking, 
+				smoking=:smoking,
+				pets=:pets,
+				budget=:budget
+				WHERE comp_id =:user_id";
+    $statement = $db->prepare($query);
+	$statement->bindValue(':user_id', $user_id);
+    $statement->bindValue(':on_off', $on_off); 
+    $statement->bindValue(':sleep', $sleep); 
+	$statement->bindValue(':num_roommates', $num_roommates); 
+	$statement->bindValue(':drinking', $drinking); 
+	$statement->bindValue(':smoking', $smoking); 
+	$statement->bindValue(':pets', $pets); 
+	$statement->bindValue(':budget', $budget); 
+    $statement->execute();
+    $statement->closeCursor();
 }
 
 function getAllUsers()
