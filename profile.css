@@ -1,0 +1,44 @@
+/* Container spacing */
+.profile-container {
+    max-width: 1200px;
+}
+
+/* Left card */
+.profile-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.profile-img {
+    width: 140px;
+    height: 140px;
+}
+
+/* Details list */
+.details-list span {
+    font-size: 15px;
+}
+
+/* Right content */
+.profile-content {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+/* Tabs */
+.nav-tabs .nav-link {
+    color: #555;
+}
+
+.nav-tabs .nav-link.active {
+    font-weight: bold;
+    border-bottom: 2px solid #007bff;
+}
+
+/* Form labels */
+form label {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
