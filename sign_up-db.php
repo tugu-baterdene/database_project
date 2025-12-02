@@ -26,11 +26,11 @@ function addUsers($comp_id, $stu_name, $phone_number, $passwd)
 
 function addPref($comp_id)
 {
-	global $db3; 
+	global $db; 
 	$query = "INSERT INTO preferences
           SET comp_id = :comp_id";
 	try {
-		$statement = $db3->prepare($query);
+		$statement = $db->prepare($query);
         $statement->bindValue(':comp_id', $comp_id); 
         $statement->execute();
         $statement->closeCursor();
