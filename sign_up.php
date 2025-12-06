@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 		session_start(); 
 		$_SESSION['user_id'] = $_POST['comp_id'];
 		echo "Welcome, " . $_SESSION['user_id'] . "!";
-		header("Location: profile.php");
+		header("Location: login.php");
 		exit();
 	}
 }
