@@ -1,0 +1,81 @@
+/* Container spacing */
+.groups-container {
+    max-width: 1200px;
+}
+
+/* Group card */
+.group-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s ease;
+}
+
+.group-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.group-card h5 {
+    margin-bottom: 15px;
+    color: #232d4b;
+    font-weight: 600;
+}
+
+/* Members list */
+.members-list {
+    background: #f9f9f9;
+    border-radius: 6px;
+    padding: 15px;
+}
+
+.member-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.member-item:last-child {
+    border-bottom: none;
+}
+
+.member-name {
+    font-weight: 500;
+}
+
+.member-status {
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: #e7f3ff;
+    color: #0066cc;
+}
+
+/* Action buttons */
+.btn-action {
+    margin-top: 10px;
+    margin-right: 5px;
+}
+
+/* Create group form */
+.create-group-form {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+}
+
+.empty-state p {
+    margin-bottom: 20px;
+}

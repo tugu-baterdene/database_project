@@ -5,7 +5,7 @@ $username = 'fnf8eh';
 $password = 'PhpSurf@123';
 $host = 'mysql01.cs.virginia.edu';
 $dbname = 'fnf8eh_a';
-$dsn = "mysql:host=$host;dbname=$dbname";
+$dsn = "mysql:host=$host;dbname=$dbname;connect_timeout=5";
 ////////////////////////////////////////////
 
 
@@ -13,7 +13,7 @@ $dsn = "mysql:host=$host;dbname=$dbname";
 try 
 {
 //  $db = new PDO("mysql:host=$hostname;dbname=db-demo", $username, $password);
-   $db = new PDO($dsn, $username, $password);
+   $db = new PDO($dsn, $username, $password, array(PDO::ATTR_TIMEOUT => 5));
    
    // dispaly a message to let us know that we are connected to the database 
    // echo "<p>You are connected to the database -- host=$host</p>";
