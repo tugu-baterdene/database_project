@@ -1,108 +1,317 @@
 <?php
-function fetchUser($user_id)
+function fetchGroup($user_id)
 {
 	global $db;
-	$query = "SELECT comp_id, stu_name, phone_number, passwd, school_year, major, bio FROM users WHERE comp_id = :user_id";
-	$stmt = $db->prepare($query);
-	$stmt->bindParam(':user_id', $user_id);
-	$stmt->execute();
+	$query = "SELECT g_id FROM users NATURAL JOIN groups WHERE comp_id = :user_id";
+	$statement = $db->prepare($query);
+	$statement->bindParam(':user_id', $user_id);
+	$statement->execute();
 
-	$user = $stmt->fetch(PDO::FETCH_ASSOC); // $user now contains user's info
-	return $user;
+	$group = $statement->fetch(PDO::FETCH_ASSOC); // $user now contains user's info
+	return $group;
 }
 
-function fetchLocation($user_id)
+function fetchLandlord($name, $contact)
 {
 	global $db;
-	$query = "SELECT addr, bedroom, bathroom, on_off_grounds, price, extra_cost FROM users NATURAL JOIN part_of NATURAL JOIN groups NATURAL JOIN location WHERE comp_id = :user_id";
-	$stmt = $db->prepare($query);
-	$stmt->bindParam(':user_id', $user_id);
-	$stmt->execute();
+	$query = "SELECT l_id FROM landlords WHERE name =:name AND contact =:contact";
+	$statement = $db->prepare($query);
+	$statement->bindParam(':name', $name);
+	$statement->bindParam(':contact', $contact);
+	$statement->execute();
 
-	$location = $stmt->fetch(PDO::FETCH_ASSOC);
+	$location = $statement->fetch(PDO::FETCH_ASSOC);
 	return $location;
 }
 
-function getRequestById($user_id)  
-{
-	global $db;
-    $query = "SELECT * FROM users WHERE comp_id = :user_id";
-    $statement = $db->prepare($query);
-    $statement->bindValue(':user_id', $user_id);
-    $statement->execute();
-	$results = $statement->fetch();
-    $statement->closeCursor();
-	
-	return $results;
-}
-
-function updateUser($user_id, $stu_name, $phone_number, $school_year, $major, $bio)
+function addLocation($addr, $bedroom, $bathroom, $on_off_grounds, $price, $extra_cost)
 {
 	global $db; 
-	$query = "UPDATE users 
-			SET stu_name =:stu_name, 
-				phone_number=:phone_number, 
-				school_year=:school_year, 
-				major=:major, 
-				bio=:bio
-				WHERE comp_id =:user_id";
-    $statement = $db->prepare($query);
-	$statement->bindValue(':user_id', $user_id);
-    $statement->bindValue(':stu_name', $stu_name); 
-    $statement->bindValue(':phone_number', $phone_number); 
-	$statement->bindValue(':school_year', $school_year); 
-	$statement->bindValue(':major', $major); 
-	$statement->bindValue(':bio', $bio); 
-    $statement->execute();
-    $statement->closeCursor();
+	$query = "INSERT INTO location
+          SET addr =:addr,
+              bedroom =:bedroom,
+              bathroom =:bathroom,
+              on_off_grounds =:on_off_grounds,
+			  price =:price,
+			  extra_cost =:extra_cost";
+	try {
+		$statement = $db->prepare($query);
+        $statement->bindValue(':addr', $addr); 
+        $statement->bindValue(':bedroom', $bedroom); 
+        $statement->bindValue(':bathroom', $bathroom); 
+        $statement->bindValue(':on_off_grounds', $on_off_grounds);
+		$statement->bindValue(':price', $price); 
+		$statement->bindValue(':extra_cost', $extra_cost); 
+        $statement->execute();
+        $statement->closeCursor();
+	}
+	catch (PDOException $e) {
+		echo $e->getMessage();
+	}
+	catch (Exception $e) {
+		echo $e->getMessage(); 
+	}
 }
 
-function updateLogin($user_id, $stu_name, $phone_number, $passwd, $school_year, $major, $bio)
+function addApt($addr, $elevator, $num_of_floors, $balcony, $pets, $smoking)
+{	
+	global $db; 
+	$query = "INSERT INTO apartment
+          SET addr =:addr,
+              elevator =:elevator,
+              num_of_floors =:num_of_floors,
+              balcony =:balcony,
+			  pets =:pets,
+			  smoking =:smoking";
+	try {
+		$statement = $db->prepare($query);
+        $statement->bindValue(':addr', $addr); 
+        $statement->bindValue(':elevator', $elevator); 
+        $statement->bindValue(':num_of_floors', $num_of_floors); 
+        $statement->bindValue(':balcony', $balcony);
+		$statement->bindValue(':pets', $pets); 
+		$statement->bindValue(':smoking', $smoking); 
+        $statement->execute();
+        $statement->closeCursor();
+	}
+	catch (PDOException $e) {
+		echo $e->getMessage();
+	}
+	catch (Exception $e) {
+		echo $e->getMessage(); 
+	}
+}
+
+function addHouse($addr, $yard, $stories, $porch)
 {
 	global $db; 
-	$query = "UPDATE users 
-			SET stu_name =:stu_name, 
-				phone_number=:phone_number, 
-				passwd=:passwd,
-				school_year=:school_year, 
-				major=:major, 
-				bio=:bio
-				WHERE comp_id =:user_id";
-    $statement = $db->prepare($query);
-	$statement->bindValue(':user_id', $user_id);
-    $statement->bindValue(':stu_name', $stu_name); 
-    $statement->bindValue(':phone_number', $phone_number); 
-	$statement->bindValue(':passwd', $passwd);
-	$statement->bindValue(':school_year', $school_year); 
-	$statement->bindValue(':major', $major); 
-	$statement->bindValue(':bio', $bio); 
-    $statement->execute();
-    $statement->closeCursor();
+	$query = "INSERT INTO house
+          SET addr =:addr,
+              yard =:yard,
+              stories =:stories,
+              porch =:porch";
+	try {
+		$statement = $db->prepare($query);
+        $statement->bindValue(':addr', $addr); 
+        $statement->bindValue(':yard', $yard); 
+        $statement->bindValue(':stories', $stories); 
+        $statement->bindValue(':porch', $porch);
+        $statement->execute();
+        $statement->closeCursor();
+	}
+	catch (PDOException $e) {
+		echo $e->getMessage();
+	}
+	catch (Exception $e) {
+		echo $e->getMessage(); 
+	}
 }
 
-function updatePref($user_id, $on_off, $sleep, $num_roommates, $drinking, $smoking, $pets, $budget)
+function addDorm($addr, $style, $single_double, $kitchen)
 {
     global $db; 
-	$query = "UPDATE preferences 
-			SET on_off_grounds=:on_off, 
-				sleeping=:sleep, 
-				num_of_roommates=:num_roommates, 
-				drinking=:drinking, 
-				smoking=:smoking,
-				pets=:pets,
-				budget=:budget
-				WHERE comp_id =:user_id";
+	$query = "INSERT INTO dorm
+          SET addr =:addr,
+              style =:style,
+              single_double =:single_double,
+              kitchen =:kitchen";
+	try {
+		$statement = $db->prepare($query);
+        $statement->bindValue(':addr', $addr); 
+        $statement->bindValue(':style', $style); 
+        $statement->bindValue(':single_double', $single_double); 
+        $statement->bindValue(':kitchen', $kitchen);
+        $statement->execute();
+        $statement->closeCursor();
+	}
+	catch (PDOException $e) {
+		echo $e->getMessage();
+	}
+	catch (Exception $e) {
+		echo $e->getMessage(); 
+	}
+}
+
+function addLandlord($name, $contact) 
+{
+	global $db; 
+	$query = "INSERT INTO landlords
+          SET name =:name,
+              contact =:contact";
+	try {
+		$statement = $db->prepare($query);
+        $statement->bindValue(':name', $name); 
+        $statement->bindValue(':contact', $contact); 
+        $statement->execute();
+        $statement->closeCursor();
+	}
+	catch (PDOException $e) {
+		echo $e->getMessage();
+	}
+	catch (Exception $e) {
+		echo $e->getMessage(); 
+	}
+}
+
+function addOwns($l_id, $addr) 
+{
+    global $db; 
+    $query = "INSERT INTO owns 
+		SET l_id =:l_id,
+            addr =:addr";
+    try {
+        $statement = $db->prepare($query);
+        $statement->bindValue(':l_id', $l_id);
+        $statement->bindValue(':addr', $addr);
+        $statement->execute();
+        $statement->closeCursor();
+    }
+    catch (PDOException $e) {
+        echo $e->getMessage();
+    }
+    catch (Exception $e) {
+        echo $e->getMessage(); 
+    }
+}
+
+function checkAddr($addr) {
+    global $db;
+    $query = "SELECT * FROM location WHERE addr =:addr";
     $statement = $db->prepare($query);
-	$statement->bindValue(':user_id', $user_id);
-    $statement->bindValue(':on_off', $on_off); 
-    $statement->bindValue(':sleep', $sleep); 
-	$statement->bindValue(':num_roommates', $num_roommates); 
-	$statement->bindValue(':drinking', $drinking); 
-	$statement->bindValue(':smoking', $smoking); 
-	$statement->bindValue(':pets', $pets); 
-	$statement->bindValue(':budget', $budget); 
+    $statement->bindValue(':addr', $addr);
+    $statement->execute();
+
+    // fetchColumn returns false if no row exists
+    return $statement->fetchColumn() !== false;
+}
+
+function checkLandlord($name, $contact) {
+    global $db;
+	$query = "SELECT l_id FROM landlords WHERE name =:name AND contact =:contact";
+	$statement = $db->prepare($query);
+	$statement->bindValue(':name', $name);
+	$statement->bindValue(':contact', $contact);
+	$statement->execute();
+
+    // fetchColumn returns false if no row exists
+    return $statement->fetchColumn() !== false;
+}
+
+function checkOwns($addr) { // checks for matching landlord given its address
+    global $db;
+	$query = "SELECT l_id FROM owns WHERE addr =:addr";
+	$statement = $db->prepare($query);
+	$statement->bindValue(':addr', $addr);
+	$statement->execute();
+	$curr_lid = $statement->fetch(PDO::FETCH_ASSOC);
+
+    // fetchColumn returns false if no row exists
+    return $curr_lid;
+}
+
+function updateLocation($addr, $bedroom, $bathroom, $on_off_grounds, $price, $extra_cost)
+{
+	global $db; 
+	$query = "UPDATE location
+			SET
+              bedroom =:bedroom,
+              bathroom =:bathroom,
+              on_off_grounds =:on_off_grounds,
+			  price =:price,
+			  extra_cost =:extra_cost
+			  WHERE addr =:addr";
+	$statement = $db->prepare($query);
+    $statement->bindValue(':addr', $addr); 
+    $statement->bindValue(':bedroom', $bedroom); 
+    $statement->bindValue(':bathroom', $bathroom); 
+    $statement->bindValue(':on_off_grounds', $on_off_grounds);
+	$statement->bindValue(':price', $price); 
+	$statement->bindValue(':extra_cost', $extra_cost); 
     $statement->execute();
     $statement->closeCursor();
 }
 
+function updateApt($addr, $elevator, $num_of_floors, $balcony, $pets, $smoking)
+{	
+	global $db; 
+	$query = "UPDATE apartment
+          SET 
+              elevator =:elevator,
+              num_of_floors =:num_of_floors,
+              balcony =:balcony,
+			  pets =:pets,
+			  smoking =:smoking
+			  WHERE addr =:addr";
+	$statement = $db->prepare($query);
+    $statement->bindValue(':addr', $addr); 
+    $statement->bindValue(':elevator', $elevator); 
+    $statement->bindValue(':num_of_floors', $num_of_floors); 
+    $statement->bindValue(':balcony', $balcony);
+	$statement->bindValue(':pets', $pets); 
+	$statement->bindValue(':smoking', $smoking); 
+    $statement->execute();
+    $statement->closeCursor();
+}
+
+function updateHouse($addr, $yard, $stories, $porch)
+{
+	global $db; 
+	$query = "UPDATE house
+          SET 
+              yard =:yard,
+              stories =:stories,
+              porch =:porch
+			  WHERE addr =:addr";
+	$statement = $db->prepare($query);
+    $statement->bindValue(':addr', $addr); 
+    $statement->bindValue(':yard', $yard); 
+    $statement->bindValue(':stories', $stories); 
+    $statement->bindValue(':porch', $porch);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
+function updateDorm($addr, $style, $single_double, $kitchen)
+{
+    global $db; 
+	$query = "UPDATE dorm
+          SET
+              style =:style,
+              single_double =:single_double,
+              kitchen =:kitchen
+			  WHERE addr =:addr";
+	$statement = $db->prepare($query);
+    $statement->bindValue(':addr', $addr); 
+    $statement->bindValue(':style', $style); 
+    $statement->bindValue(':single_double', $single_double); 
+    $statement->bindValue(':kitchen', $kitchen);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
+function updateGroup($g_id, $addr)
+{
+	global $db; 
+	$query = "UPDATE groups
+          SET
+              addr =:addr
+			  WHERE g_id =:g_id";
+	$statement = $db->prepare($query);
+    $statement->bindValue(':g_id', $g_id);
+	$statement->bindValue(':addr', $addr);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
+function removeOwns($l_id, $addr) 
+{
+    global $db;
+    $query = "DELETE FROM owns WHERE l_id = :l_id AND addr = :addr";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':l_id', $l_id);
+    $statement->bindValue(':addr', $addr);
+    $statement->execute();
+    $statement->closeCursor();
+    return $statement;
+}
 ?>
