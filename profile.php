@@ -12,31 +12,25 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $user = fetchUser($user_id);
 $pref = fetchPref($user_id);
-// echo "Still signed in as user";
 ?>
 
 <?php 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') 	
 {
 	if (!empty($_POST['saveUser'])) 
-	{
-		if (!empty($_POST['verify_passwd']) && $_POST['verify_passwd'] === $_POST['passwd']) {
-			updateLogin($user_id, $_POST['stu_name'], $_POST['phone_number'], $_POST['passwd'], $_POST['school_year'], $_POST['major'], $_POST['bio']);
-			$request_to_update = getRequestById($user_id);
-			$user = fetchUser($user_id);
-		}
-		else {
-			updateUser($user_id, $_POST['stu_name'], $_POST['phone_number'], $_POST['school_year'], $_POST['major'], $_POST['bio']);
-			$request_to_update = getRequestById($user_id);
-			$user = fetchUser($user_id);
-		}
+    {
+        if (!empty($_POST['verify_passwd']) && !empty($_POST['passwd']) && $_POST['verify_passwd'] === $_POST['passwd']) {
+        	$hashed_password = password_hash($_POST['passwd'], PASSWORD_DEFAULT);
+            updateLogin($user_id, $hashed_password);
+        }
+		updateUser($user_id, $_POST['stu_name'], $_POST['phone_number'], $_POST['school_year'], $_POST['major'], $_POST['bio']);
+		$user = fetchUser($user_id);
 	}
-	if (!empty($_POST['savePref'])) 
-	{
-		updatePref($user_id, $_POST['on_off'], $_POST['sleep'], $_POST['num_roommates'], $_POST['drinking'], $_POST['smoking'], $_POST['pets'], $_POST['budget']);
-		$pref_to_update = getPrefById($user_id);
-		$pref = fetchPref($user_id);
-	}
+    if (!empty($_POST['savePref'])) 
+    {
+        updatePref($user_id, $_POST['on_off'], $_POST['sleep'], $_POST['num_roommates'], $_POST['drinking'], $_POST['smoking'], $_POST['pets'], $_POST['budget']);
+        $pref = fetchPref($user_id);
+    }
 }
 ?>
 
@@ -63,15 +57,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             <div class="profile-card p-4">
 
                 <div class="text-center mb-3">
+					<h2>My Profile</h2>
                     <img src="https://via.placeholder.com/140" class="rounded-circle profile-img">
                 </div>
 
-                <h4 class="text-center"><?php echo htmlspecialchars($user['stu_name']); ?></h4>
+                <h4 class="text-center">Grace Sung</h4>
                 <p class="text-center text-muted">Student at the University of Virginia</p>
 
                 <hr>
 
-                <div class="details-list">
+				<div class="details-list">
                     <div class="d-flex justify-content-between py-2">
                         <span>Computing ID</span><span><?php echo htmlspecialchars($user['comp_id']); ?></span>
                     </div>
@@ -84,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                 </div>
 
                 <div class="text-center mt-4">
-                    <button class="btn btn-primary w-100">View Public Profile</button>
+					<a href="public_profile.php" class="btn btn-primary w-100">View Public Profile</a>
                 </div>
 
             </div>
@@ -113,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="tab3-tab" data-bs-toggle="tab"
                                 data-bs-target="#tab3" type="button" role="tab">
-                            Location
+                            Settings(?)
                         </button>
                     </li>
                 </ul>
@@ -176,8 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label>Password</label>
-                                    <input type="password" class="form-control" id='passwd' name='passwd'
-										value="<?php if ($user['passwd'] !=null) echo $user['passwd']; ?>" />
+                                    <input type="password" class="form-control" id='passwd' name='passwd'/>
                                 </div>
                                 <div class="col-md-6">
                                     <label>Verify Password</label>
@@ -300,8 +294,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
                     <!-- TAB 3 CONTENT -->
                     <div class="tab-pane fade" id="tab3" role="tabpanel">
-                        <h4>Location(?)</h4>
-                        <p>This is where Location and Landlord information goes(?)</p>
+                        <h4>Settings(?)</h4>
+                        <p>This is where setting information goes(?)</p>
                     </div>
 
                 </div>
