@@ -23,18 +23,43 @@ function fetchPref($user_id)
 	return $pref;
 }
 
+function fetchLocation($user_id)
+{
+	// CHANGE SQL TO BE LOCATION, not LOCATIONS
+	global $db;
+	$query = "SELECT addr, bedroom, bathroom, on_off_grounds, price, extra_cost FROM users NATURAL JOIN part_of NATURAL JOIN groups NATURAL JOIN location WHERE comp_id = :user_id";
+	$stmt = $db->prepare($query);
+	$stmt->bindParam(':user_id', $user_id);
+	$stmt->execute();
+
+	$location = $stmt->fetch(PDO::FETCH_ASSOC);
+	return $location;
+}
+
+function fetchStatus($user_id)
+{
+	// CHANGE SQL TO BE LOCATION, not LOCATIONS
+	global $db;
+	$query = "SELECT g_id, status FROM users NATURAL JOIN part_of NATURAL JOIN groups WHERE comp_id = :user_id";
+	$stmt = $db->prepare($query);
+	$stmt->bindParam(':user_id', $user_id);
+	$stmt->execute();
+
+	$status = $stmt->fetch(PDO::FETCH_ASSOC);
+	return $status;
+}
+
 function getRequestById($user_id)  
 {
 	global $db;
     $query = "SELECT * FROM users WHERE comp_id = :user_id";
     $statement = $db->prepare($query);
-    $statement->bindValue(':user_id', $user_id); // $reqId is from the parameter --> more safe
+    $statement->bindValue(':user_id', $user_id);
     $statement->execute();
 	$results = $statement->fetch();
     $statement->closeCursor();
 	
 	return $results;
-
 }
 
 function getPrefById($user_id)  
@@ -71,25 +96,15 @@ function updateUser($user_id, $stu_name, $phone_number, $school_year, $major, $b
     $statement->closeCursor();
 }
 
-function updateLogin($user_id, $stu_name, $phone_number, $passwd, $school_year, $major, $bio)
+function updateLogin($user_id, $passwd)
 {
 	global $db; 
 	$query = "UPDATE users 
-			SET stu_name =:stu_name, 
-				phone_number=:phone_number, 
-				passwd=:passwd,
-				school_year=:school_year, 
-				major=:major, 
-				bio=:bio
-				WHERE comp_id =:user_id";
+			SET passwd=:passwd
+			WHERE comp_id =:user_id";
     $statement = $db->prepare($query);
 	$statement->bindValue(':user_id', $user_id);
-    $statement->bindValue(':stu_name', $stu_name); 
-    $statement->bindValue(':phone_number', $phone_number); 
 	$statement->bindValue(':passwd', $passwd);
-	$statement->bindValue(':school_year', $school_year); 
-	$statement->bindValue(':major', $major); 
-	$statement->bindValue(':bio', $bio); 
     $statement->execute();
     $statement->closeCursor();
 }
