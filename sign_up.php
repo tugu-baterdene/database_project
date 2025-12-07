@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Roommate Connections – Sign In</title>
+    <title>Roommate Connections – Sign Up</title>
     <link rel="stylesheet" href="sign_up.css">
 </head>
 
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
   <div class="header">Roommate Connections</div>
 
   <div class="signin-wrapper"> 
-		<h1 class="signin-title">SIGN IN</h1> 
+		<h1 class="signin-title">SIGN UP</h1> 
 		<p class="login-line"> Have an account? 
 			<a href="login.php">Log in</a> 
 		</p> 

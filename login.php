@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <div class="login-wrapper"> 
         <h1 class="login-title">LOG IN</h1> 
         <p class="signup-line"> Don't have an account? 
-            <a href="sign_up.php">Sign In</a> 
+            <a href="sign_up.php">Sign Up</a> 
         </p> 
 
         <form method="post" class="login-form" action="<?php echo $_SERVER['PHP_SELF'] ?>" onsubmit="return validateInput()">
