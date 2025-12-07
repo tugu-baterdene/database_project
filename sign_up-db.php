@@ -7,7 +7,7 @@ function addUsers($comp_id, $stu_name, $phone_number, $passwd)
               stu_name = :stu_name,
               phone_number = :phone_number,
               passwd = :passwd";
-    $hashed = password_hash($passwd, PASSWORD_DEFAULT);
+    // $hashed = password_hash($passwd, PASSWORD_DEFAULT);
 
 	try {
 		$statement = $db->prepare($query);
