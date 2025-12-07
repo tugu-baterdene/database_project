@@ -107,8 +107,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') 	 // check if addr AND/OR landlord is 
 			addDorm($_POST['addr_d'], $_POST['style'], $$_POST['single_double'], $_POST['kitchen']);
 
 			// set "landlord" for UVA housing
-			$name_d = "UVA Housing";
-			$contact_d = "434-924-3736";
+			$name_d = "UVA";
+			$contact_d = "housing@virginia.edu";
 			$l_row = fetchLandlord($name_d, $contact_d);
 			$l_id = $l_row['l_id'];
 			addOwns($l_id, $_POST['addr_d']);
@@ -193,7 +193,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') 	 // check if addr AND/OR landlord is 
 										value="<?php if ($landlord['name'] !=null) echo $location['name']; ?>">
                                 </div>
 								 <div class="col-md-3">
-                                    <label>Landlord's Phone Number</label>
+                                    <label>Landlord's Email</label>
                                     <input type="text" class="form-control" id='contact_a' name='contact_a' required
 										value="<?php if ($landlord['contact'] !=null) echo $location['contact'];?>">
                                 </div>
@@ -336,7 +336,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') 	 // check if addr AND/OR landlord is 
 										value="<?php if ($landlord['name'] !=null) echo $location['name']; ?>">
                                 </div>
 								 <div class="col-md-3">
-                                    <label>Landlord's Phone Number</label>
+                                    <label>Landlord's Email</label>
                                     <input type="text" class="form-control" id='contact_h' name='contact_h' required
 										value="<?php if ($landlord['contact'] !=null) echo $landlord['contact']; ?>">
                                 </div>
