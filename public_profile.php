@@ -9,11 +9,15 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 } 
 
-$user_id = $_SESSION['user_id'];
+if (isset($_GET['comp_id'])) {
+    $user_id = $_GET['comp_id']; 
+} else {
+    $user_id = $_SESSION['user_id']; 
+}
 $user = fetchUser($user_id);
 $pref = fetchPref($user_id);
 $location = fetchLocation($user_id);
-$status = fetchStatus($user_id);
+$status = $user['status'];
 
 ?>
 

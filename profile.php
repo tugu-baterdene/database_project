@@ -11,6 +11,12 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 $user = fetchUser($user_id);
+
+if (!$user) {
+    echo "<p>Error: user not found.</p>";
+    exit();
+}
+
 $pref = fetchPref($user_id);
 ?>
 

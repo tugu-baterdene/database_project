@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 <div class="container mt-4">
     <h2>Search for Roommates</h2>
-    <p class="text-muted">Filter by the criteria below.</p>
+    <p class="text-muted">Filter by the criteria below. (Click Search to See All)</p>
 
     <form method="POST" class="row g-3">
 
@@ -85,7 +85,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <tbody>
             <?php foreach ($results as $user): ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($user['stu_name']); ?></td>
+                    <td>
+                        <a href="public_profile.php?comp_id=<?php echo urlencode($user['comp_id']); ?>">
+                        <?php echo htmlspecialchars($user['stu_name']); ?>
+                        </a>
+                    </td>
                     <td><?php echo htmlspecialchars($user['major']); ?></td>
                     <td><?php echo htmlspecialchars($user['school_year']); ?></td>
                     <td><?php echo htmlspecialchars($user['status']); ?></td>
