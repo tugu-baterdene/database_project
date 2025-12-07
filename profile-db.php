@@ -135,8 +135,13 @@ function fetchLocation($user_id)
 {
     global $db;
 
-    
-    $query = "SELECT * FROM location WHERE comp_id = :user_id";
+    // Join tables to get the user's location via groups
+    $query = "SELECT l.*
+              FROM location l
+              JOIN groups g ON l.addr = g.addr
+              JOIN part_of p ON g.g_id = p.g_id
+              WHERE p.comp_id = :user_id";
+
     $stmt = $db->prepare($query);
     $stmt->bindParam(':user_id', $user_id);
     $stmt->execute();
@@ -148,43 +153,21 @@ function fetchLocation($user_id)
 
     $addr = $location['addr'];
 
-    
-    $query = "SELECT * FROM apartment WHERE addr = :addr";
-    $stmt = $db->prepare($query);
-    $stmt->bindParam(':addr', $addr);
-    $stmt->execute();
-    $apartment = $stmt->fetch(PDO::FETCH_ASSOC);
-    if ($apartment) {
-        $location['type'] = 'apartment';
-        $location['details'] = $apartment;
-        return $location;
+    // Get apartment/house/dorm details
+    $tables = ['apartment', 'house', 'dorm'];
+    foreach ($tables as $table) {
+        $query = "SELECT * FROM $table WHERE addr = :addr";
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':addr', $addr);
+        $stmt->execute();
+        $details = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($details) {
+            $location['type'] = $table;
+            $location['details'] = $details;
+            return $location;
+        }
     }
 
-    
-    $query = "SELECT * FROM house WHERE addr = :addr";
-    $stmt = $db->prepare($query);
-    $stmt->bindParam(':addr', $addr);
-    $stmt->execute();
-    $house = $stmt->fetch(PDO::FETCH_ASSOC);
-    if ($house) {
-        $location['type'] = 'house';
-        $location['details'] = $house;
-        return $location;
-    }
-
-    
-    $query = "SELECT * FROM dorm WHERE addr = :addr";
-    $stmt = $db->prepare($query);
-    $stmt->bindParam(':addr', $addr);
-    $stmt->execute();
-    $dorm = $stmt->fetch(PDO::FETCH_ASSOC);
-    if ($dorm) {
-        $location['type'] = 'dorm';
-        $location['details'] = $dorm;
-        return $location;
-    }
-
-    
     $location['type'] = 'unknown';
     return $location;
 }
