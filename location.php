@@ -199,7 +199,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') 	 // check if addr AND/OR landlord is 
                                 </div>
 								<div class="col-md-3">
                                     <label>On/Off Grounds</label>
-                                    <select class="form-control" id='on_off_a' name='on_off_a'>
+                                    <select class="form-control" id='on_off_a' name='on_off_a' required>
 										<option selected></option>
 										<option value='On'
 											<?php if ($location['on_off_grounds'] == 'On') 
@@ -218,33 +218,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') 	 // check if addr AND/OR landlord is 
                                 <div class="col-md-4">
                                     <label>Rent</label>
                                     <input type="text" class="form-control" id='price_a' name='price_a'
-										value="<?php if ($location['price'] !=null) echo $location['price']; ?>"/>
+										value="<?php if ($location['price'] !=null) echo $location['price']; ?>" required/>
                                 </div>
                                 <div class="col-md-8">
                                     <label>Extra Costs (Ex. unaccounted utilities)</label>
                                     <input type="text" class="form-control" id='extra_cost_a' name='extra_cost_a'
-										value="<?php if ($location['extra_cost'] !=null) echo $location['extra_cost']; ?>"/>
+										value="<?php if ($location['extra_cost'] !=null) echo $location['extra_cost']; ?>" required/>
                                 </div>
                             </div>
 							<div class="row mb-3">
                                 <div class="col-md-3">
                                     <label>Bedrooms</label>
                                     <input type="text" class="form-control" id='bedroom_a' name='bedroom_a'
-										value="<?php if ($location['bedroom'] !=null) echo $location['bedroom']; ?>"/>
+										value="<?php if ($location['bedroom'] !=null) echo $location['bedroom']; ?>" required/>
                                 </div>
                                 <div class="col-md-3">
                                     <label>Bathrooms</label>
                                     <input type="text" class="form-control" id='bathroom_a' name='bathroom_a'
-										value="<?php if ($location['bathroom'] !=null) echo $location['bathroom']; ?>"/>
+										value="<?php if ($location['bathroom'] !=null) echo $location['bathroom']; ?>" required/>
                                 </div>
 								<div class="col-md-3">
                                     <label>Number of Floors</label>
                                     <input type="number" class="form-control" id='num_of_floors' name='num_of_floors'
-										value="<?php if ($apt['num_of_floors'] !=null) echo $apt['num_of_floors']; ?>"/>
+										value="<?php if ($apt['num_of_floors'] !=null) echo $apt['num_of_floors']; ?>" required/>
                                 </div>
 								<div class="col-md-3">
                                     <label>Has Elevators?</label>
-                                    <select class="form-control" id='elevator' name='elevator'>
+                                    <select class="form-control" id='elevator' name='elevator' required>
 										<option selected></option>
 										<option value='1'
 											<?php if ($apt['elevator'] == '1') 
@@ -262,7 +262,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') 	 // check if addr AND/OR landlord is 
 							<div class="row mb-3">
 								<div class="col-md-3">
                                     <label>Has Balcony?</label>
-                                    <select class="form-control" id='balcony' name='balcony'>
+                                    <select class="form-control" id='balcony' name='balcony' required>
 										<option selected></option>
 										<option value='1'
 											<?php if ($apt['balcony'] == '1') 
@@ -278,7 +278,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') 	 // check if addr AND/OR landlord is 
                                 </div>
 								<div class="col-md-3">
                                     <label>Allows Pets?</label>
-                                    <select class="form-control" id='pets' name='pets'>
+                                    <select class="form-control" id='pets' name='pets' required>
 										<option selected></option>
 										<option value='1'
 											<?php if ($apt['pets'] == '1') 
@@ -294,7 +294,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') 	 // check if addr AND/OR landlord is 
                                 </div>
 								<div class="col-md-3">
                                     <label>Allows Smoking?</label>
-                                    <select class="form-control" id='smoking' name='smoking'>
+                                    <select class="form-control" id='smoking' name='smoking' required>
 										<option selected></option>
 										<option value='1'
 											<?php if ($apt['smoking'] == '1') 
@@ -342,7 +342,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') 	 // check if addr AND/OR landlord is 
                                 </div>
 								<div class="col-md-3">
                                     <label>On/Off Grounds</label>
-                                    <select class="form-control" id='on_off_h' name='on_off_h'>
+                                    <select class="form-control" id='on_off_h' name='on_off_h' required>
 										<option selected></option>
 										<option value='On'
 											<?php if ($location['on_off_grounds'] == 'On') 
@@ -361,33 +361,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') 	 // check if addr AND/OR landlord is 
                                 <div class="col-md-4">
                                     <label>Rent</label>
                                     <input type="text" class="form-control" id='price_h' name='price_h'
-										value="<?php if ($location['price'] !=null) echo $location['price']; ?>"/>
+										value="<?php if ($location['price'] !=null) echo $location['price']; ?>" required/>
                                 </div>
                                 <div class="col-md-8">
                                     <label>Extra Costs (Ex. unaccounted utilities)</label>
                                     <input type="text" class="form-control" id='extra_cost_h' name='extra_cost_h'
-										value="<?php if ($location['extra_cost'] !=null) echo $location['extra_cost']; ?>"/>
+										value="<?php if ($location['extra_cost'] !=null) echo $location['extra_cost']; ?>" required/>
                                 </div>
                             </div>
 							<div class="row mb-3">
                                 <div class="col-md-3">
                                     <label>Bedrooms</label>
                                     <input type="text" class="form-control" id='bedroom_h' name='bedroom_h'
-										value="<?php if ($location['bedroom'] !=null) echo $location['bedroom']; ?>" />
+										value="<?php if ($location['bedroom'] !=null) echo $location['bedroom']; ?>" required/>
                                 </div>
                                 <div class="col-md-3">
                                     <label>Bathrooms</label>
                                     <input type="text" class="form-control" id='bathroom_h' name='bathroom_h'
-										value="<?php if ($location['bathroom'] !=null) echo $location['bathroom']; ?>" />
+										value="<?php if ($location['bathroom'] !=null) echo $location['bathroom']; ?>" required/>
                                 </div>
 								<div class="col-md-2">
                                     <label>Number of Stories</label>
                                     <input type="number" class="form-control" id='stories' name='stories'
-										value="<?php if ($house['stories'] !=null) echo $house['stories']; ?>" />
+										value="<?php if ($house['stories'] !=null) echo $house['stories']; ?>" required/>
                                 </div>
 								<div class="col-md-2">
                                     <label>Has a Yard?</label>
-                                    <select class="form-control" id='yard' name='yard'>
+                                    <select class="form-control" id='yard' name='yard' required>
 										<option selected></option>
 										<option value='1'
 											<?php if ($house['yard'] == '1') 
@@ -403,7 +403,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') 	 // check if addr AND/OR landlord is 
                                 </div>
 								<div class="col-md-2">
                                     <label>Has a Porch?</label>
-                                    <select class="form-control" id='porch' name='porch'>
+                                    <select class="form-control" id='porch' name='porch' required>
 										<option selected></option>
 										<option value='1'
 											<?php if ($house['porch'] == '1') 
@@ -439,28 +439,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') 	 // check if addr AND/OR landlord is 
                                 <div class="col-md-4">
                                     <label>Rent</label>
                                     <input type="text" class="form-control" id='pric_d' name='price_d'
-										value="<?php if ($location['price'] !=null) echo $location['price']; ?>"/>
+										value="<?php if ($location['price'] !=null) echo $location['price']; ?>" required/>
                                 </div>
                                 <div class="col-md-8">
                                     <label>Extra Costs (Ex. unaccounted utilities)</label>
                                     <input type="text" class="form-control" id='extra_cost_d' name='extra_cost_d'
-										value="<?php if ($location['extra_cost'] !=null) echo $location['extra_cost']; ?>"/>
+										value="<?php if ($location['extra_cost'] !=null) echo $location['extra_cost']; ?>" required/>
                                 </div>
                             </div>
 							<div class="row mb-3">
                                 <div class="col-md-4">
                                     <label>Bedrooms</label>
                                     <input type="text" class="form-control" id='bedroom_d' name='bedroom_d'
-										value="<?php if ($location['bedroom'] !=null) echo $location['bedroom']; ?>"/>
+										value="<?php if ($location['bedroom'] !=null) echo $location['bedroom']; ?>" required/>
                                 </div>
                                 <div class="col-md-4">
                                     <label>Bathrooms</label>
                                     <input type="text" class="form-control" id='bathroom_d' name='bathroom_d'
-										value="<?php if ($location['bathroom'] !=null) echo $location['bathroom']; ?>"/>
+										value="<?php if ($location['bathroom'] !=null) echo $location['bathroom']; ?>" required/>
                                 </div>
 								<div class="col-md-4">
                                     <label>On/Off Grounds</label>
-                                    <select class="form-control" id='on_off_d' name='on_off_d'>
+                                    <select class="form-control" id='on_off_d' name='on_off_d' required>
 										<option selected></option>
 										<option value='On'
 											<?php if ($location['on_off_grounds'] == 'On') 
@@ -478,7 +478,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') 	 // check if addr AND/OR landlord is 
 							<div class="row mb-3">
 								<div class="col-md-4">
                                     <label>Style/Type</label>
-                                    <select class="form-control" id='style' name='style'>
+                                    <select class="form-control" id='style' name='style' required>
 										<option selected></option>
 										<option value='motel'
 											<?php if ($dorm['style'] == 'motel') 
@@ -499,7 +499,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') 	 // check if addr AND/OR landlord is 
                                 </div>
 								<div class="col-md-4">
                                     <label>Single or Double?</label>
-                                    <select class="form-control" id='single_double' name='single_double' >
+                                    <select class="form-control" id='single_double' name='single_double' required>
 										<option selected></option>
 										<option value='Single'
 											<?php if ($dorm['single_double'] == 'Single') 
@@ -515,7 +515,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') 	 // check if addr AND/OR landlord is 
                                 </div>
 								<div class="col-md-4">
                                     <label>Has Kitchen?</label>
-                                    <select class="form-control" id='kitchen' name='kitchen'>
+                                    <select class="form-control" id='kitchen' name='kitchen' required>
 										<option selected></option>
 										<option value='1'
 											<?php if ($dorm['kitchen'] == '1') 
