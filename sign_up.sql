@@ -145,3 +145,44 @@ CREATE TABLE owns (
        ON DELETE CASCADE
        ON UPDATE CASCADE
 );
+
+DELIMITER //
+
+CREATE PROCEDURE search_users_proc(
+    IN p_name VARCHAR(50),
+    IN p_year INT,
+    IN p_major VARCHAR(50),
+    IN p_status VARCHAR(20),
+    IN p_on_off VARCHAR(15),
+    IN p_budget DECIMAL(10,2),
+    IN p_drinking VARCHAR(10),
+    IN p_smoking VARCHAR(10),
+    IN p_pets VARCHAR(10)
+)
+BEGIN
+    SELECT 
+        users.*, 
+        preferences.budget, 
+        preferences.on_off_grounds, 
+        location.bedroom, 
+        location.bathroom
+    FROM users
+    LEFT JOIN preferences ON users.comp_id = preferences.comp_id
+    LEFT JOIN part_of ON users.comp_id = part_of.comp_id
+    LEFT JOIN groups ON part_of.g_id = groups.g_id
+    LEFT JOIN location ON groups.addr = location.addr
+    LEFT JOIN apartment ON apartment.addr = location.addr
+    LEFT JOIN house ON house.addr = location.addr
+    LEFT JOIN dorm ON dorm.addr = location.addr
+    WHERE (p_name IS NULL OR users.stu_name LIKE CONCAT('%', p_name, '%'))
+      AND (p_year IS NULL OR users.school_year = p_year)
+      AND (p_major IS NULL OR users.major LIKE CONCAT('%', p_major, '%'))
+      AND (p_status IS NULL OR users.status = p_status)
+      AND (p_on_off IS NULL OR preferences.on_off_grounds = p_on_off)
+      AND (p_budget IS NULL OR preferences.budget <= p_budget)
+      AND (p_drinking IS NULL OR preferences.drinking = p_drinking)
+      AND (p_smoking IS NULL OR preferences.smoking = p_smoking)
+      AND (p_pets IS NULL OR preferences.pets = p_pets);
+END //
+
+DELIMITER ;
