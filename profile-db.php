@@ -146,46 +146,46 @@ function getAllUsers()
 }
 
 
-function fetchLocation($user_id)
-{
-    global $db;
+// function fetchLocation($user_id)
+// {
+//     global $db;
 
-    // Join tables to get the user's location via groups
-    $query = "SELECT l.*
-              FROM location l
-              JOIN groups g ON l.addr = g.addr
-              JOIN part_of p ON g.g_id = p.g_id
-              WHERE p.comp_id = :user_id";
+//     // Join tables to get the user's location via groups
+//     $query = "SELECT l.*
+//               FROM location l
+//               JOIN groups g ON l.addr = g.addr
+//               JOIN part_of p ON g.g_id = p.g_id
+//               WHERE p.comp_id = :user_id";
 
-    $stmt = $db->prepare($query);
-    $stmt->bindParam(':user_id', $user_id);
-    $stmt->execute();
-    $location = $stmt->fetch(PDO::FETCH_ASSOC);
+//     $stmt = $db->prepare($query);
+//     $stmt->bindParam(':user_id', $user_id);
+//     $stmt->execute();
+//     $location = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if (!$location) {
-        return null;
-    }
+//     if (!$location) {
+//         return null;
+//     }
 
-    $addr = $location['addr'];
+//     $addr = $location['addr'];
 
-    // Get apartment/house/dorm details
-    $tables = ['apartment', 'house', 'dorm'];
-    foreach ($tables as $table) {
-        $query = "SELECT * FROM $table WHERE addr = :addr";
-        $stmt = $db->prepare($query);
-        $stmt->bindParam(':addr', $addr);
-        $stmt->execute();
-        $details = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($details) {
-            $location['type'] = $table;
-            $location['details'] = $details;
-            return $location;
-        }
-    }
+//     // Get apartment/house/dorm details
+//     $tables = ['apartment', 'house', 'dorm'];
+//     foreach ($tables as $table) {
+//         $query = "SELECT * FROM $table WHERE addr = :addr";
+//         $stmt = $db->prepare($query);
+//         $stmt->bindParam(':addr', $addr);
+//         $stmt->execute();
+//         $details = $stmt->fetch(PDO::FETCH_ASSOC);
+//         if ($details) {
+//             $location['type'] = $table;
+//             $location['details'] = $details;
+//             return $location;
+//         }
+//     }
 
-    $location['type'] = 'unknown';
-    return $location;
-}
+//     $location['type'] = 'unknown';
+//     return $location;
+// }
 
 
 ?>
