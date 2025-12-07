@@ -129,4 +129,65 @@ function getAllUsers()
 	$statement->closeCursor();
 	return $results;
 }
+
+
+function fetchLocation($user_id)
+{
+    global $db;
+
+    
+    $query = "SELECT * FROM location WHERE comp_id = :user_id";
+    $stmt = $db->prepare($query);
+    $stmt->bindParam(':user_id', $user_id);
+    $stmt->execute();
+    $location = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$location) {
+        return null;
+    }
+
+    $addr = $location['addr'];
+
+    
+    $query = "SELECT * FROM apartment WHERE addr = :addr";
+    $stmt = $db->prepare($query);
+    $stmt->bindParam(':addr', $addr);
+    $stmt->execute();
+    $apartment = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($apartment) {
+        $location['type'] = 'apartment';
+        $location['details'] = $apartment;
+        return $location;
+    }
+
+    
+    $query = "SELECT * FROM house WHERE addr = :addr";
+    $stmt = $db->prepare($query);
+    $stmt->bindParam(':addr', $addr);
+    $stmt->execute();
+    $house = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($house) {
+        $location['type'] = 'house';
+        $location['details'] = $house;
+        return $location;
+    }
+
+    
+    $query = "SELECT * FROM dorm WHERE addr = :addr";
+    $stmt = $db->prepare($query);
+    $stmt->bindParam(':addr', $addr);
+    $stmt->execute();
+    $dorm = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($dorm) {
+        $location['type'] = 'dorm';
+        $location['details'] = $dorm;
+        return $location;
+    }
+
+    
+    $location['type'] = 'unknown';
+    return $location;
+}
+
+
 ?>
