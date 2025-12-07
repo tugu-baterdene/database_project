@@ -311,7 +311,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') 	 // check if addr AND/OR landlord is 
                             </div>
 
 							<div class="text-end">
-								<input type="submit" class="btn btn-primary" value="CREATE APARTMENT" id="aptBtn" name="aptBtn" />  
+								<input type="submit" class="btn btn-dark" value="CREATE APARTMENT" id="aptBtn" name="aptBtn" />  
                             </div>
 
                         </form>
@@ -420,7 +420,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') 	 // check if addr AND/OR landlord is 
 							</div>
 
 							<div class="text-end">
-								<input type="submit" class="btn btn-primary" value="CREATE HOUSE" id="houseBtn" name="houseBtn" />  
+								<input type="submit" class="btn btn-dark" value="CREATE HOUSE" id="houseBtn" name="houseBtn" />  
                             </div>
 						</form>
                     </div>
@@ -531,7 +531,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') 	 // check if addr AND/OR landlord is 
                                 </div>
                             </div>
 							<div class="text-end">
-								<input type="submit" class="btn btn-primary" value="CREATE DORM" id="dormBtn" name="dormBtn" />  
+								<input type="submit" class="btn btn-dark" value="CREATE DORM" id="dormBtn" name="dormBtn" />  
                             </div>
 						</form>
                     </div>

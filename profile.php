@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                 </div>
 
                 <div class="text-center mt-4">
-					<a href="public_profile.php" class="btn btn-primary w-100">View Public Profile</a>
+					<a href="public_profile.php" class="btn btn-dark w-100">View Public Profile</a>
                 </div>
 
             </div>
@@ -185,7 +185,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                             </div>
 
                             <div class="text-end">
-								<input type="submit" class="btn btn-primary" value="SAVE" id="saveUser" name="saveUser"/>  
+								<input type="submit" class="btn btn-dark" value="SAVE" id="saveUser" name="saveUser"/>  
                             </div>
 
                         </form>
@@ -284,7 +284,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                             </div>
 
 							<div class="text-end">
-                                <input type="submit" class="btn btn-primary" value="SAVE" id="savePref" name="savePref" />  
+                                <input type="submit" class="btn btn-dark" value="SAVE" id="savePref" name="savePref" />  
                             </div>
 						</form>
                     </div>
