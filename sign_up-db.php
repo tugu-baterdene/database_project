@@ -7,12 +7,14 @@ function addUsers($comp_id, $stu_name, $phone_number, $passwd)
               stu_name = :stu_name,
               phone_number = :phone_number,
               passwd = :passwd";
+    $hashed = password_hash($passwd, PASSWORD_DEFAULT);
+
 	try {
 		$statement = $db->prepare($query);
         $statement->bindValue(':comp_id', $comp_id); 
         $statement->bindValue(':stu_name', $stu_name); 
         $statement->bindValue(':phone_number', $phone_number); 
-        $statement->bindValue(':passwd', $passwd);
+        $statement->bindValue(':passwd', $hashed);
         $statement->execute();
         $statement->closeCursor();
 	}
