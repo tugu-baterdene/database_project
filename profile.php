@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                     <img src="https://via.placeholder.com/140" class="rounded-circle profile-img">
                 </div>
 
-                <h4 class="text-center">Grace Sung</h4>
+                <h4 class="text-center"><?php echo htmlspecialchars($user['stu_name']); ?></h4>
                 <p class="text-center text-muted">Student at the University of Virginia</p>
 
                 <hr>
