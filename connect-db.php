@@ -1,10 +1,10 @@
 <?php
 
 /** F25, PHP (on GCP, local XAMPP, or CS server) connect to MySQL (on CS server) **/
-$username = 'fnf8eh'; 
-$password = 'PhpSurf@123';
+$username = 'rgp3qv'; 
+$password = 'iilwagfsS0S';
 $host = 'mysql01.cs.virginia.edu';
-$dbname = 'fnf8eh_a';
+$dbname = 'rgp3qv';
 $dsn = "mysql:host=$host;dbname=$dbname";
 ////////////////////////////////////////////
 
