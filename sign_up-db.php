@@ -43,18 +43,35 @@ function addPref($comp_id)
 	}
 }
 
+/*
 function getPasswd($comp_id)
 {
-	global $db3;
-	$query = "SELECT passwd FROM users 
-              WHERE comp_id = :comp_id";
+    global $db3;
+    $query = "SELECT passwd FROM users WHERE comp_id = :comp_id";
     $statement = $db3->prepare($query);
     $statement->bindValue(':comp_id', $comp_id);
     $statement->execute();
-    $passwd = $statement->fetch();
+    $passwd = $statement->fetch(PDO::FETCH_ASSOC); // fetch associative array
     $statement->closeCursor();
-    return $passwd;
+    return $passwd; // return the string or false if not found
 }
+	*/
+
+function getPasswd($comp_id)
+{
+    global $db3;
+    $query = "SELECT passwd FROM users WHERE comp_id = :comp_id";
+    $statement = $db3->prepare($query);
+    $statement->bindValue(':comp_id', $comp_id);
+    $statement->execute();
+
+    $row = $statement->fetch(PDO::FETCH_ASSOC); // fetch associative array
+    $statement->closeCursor();
+
+    return $row ? $row['passwd'] : false; // return just the password string or false if not found
+}
+
+
 
 function getAllUsers()
 {
