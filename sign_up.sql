@@ -19,7 +19,7 @@ CREATE TABLE preferences (
     pets VARCHAR(50),
     budget DECIMAL(10,2),
     CONSTRAINT check_pref_on_off
-        CHECK (on_off_grounds IN ('On', 'Off')),
+        CHECK (on_off_grounds IN ('On', 'Off') OR on_off_grounds IS NULL),
     CONSTRAINT check_drinking
         CHECK (drinking IN ('Yes', 'No')),
     CONSTRAINT check_smoking
@@ -49,7 +49,7 @@ CREATE TABLE location (
    price DECIMAL(10,2),
    extra_cost VARCHAR(100),
    CONSTRAINT check_on_off_grounds
-       CHECK (on_off_grounds IN ('On', 'Off')),
+       CHECK (on_off_grounds IN ('On', 'Off') OR on_off_grounds IS NULL),
    CONSTRAINT check_bedroom
        CHECK (bedroom >= 0 AND bedroom < 10),
    CONSTRAINT check_bathroom
@@ -65,7 +65,7 @@ CREATE TABLE groups (
    num_of_people INT,
    addr VARCHAR(100),
    CONSTRAINT check_status
-       CHECK (status IN ('Closed', 'Searching')),
+       CHECK (status IN ('Closed', 'Searching') OR status IS NULL),
    CONSTRAINT check_num_of_people
        CHECK (num_of_people >= 0 AND num_of_people < 20),
    PRIMARY KEY (g_id),
@@ -124,7 +124,7 @@ CREATE TABLE dorm (
    single_double VARCHAR(20),
    kitchen BOOLEAN,
    CONSTRAINT check_style
-       CHECK (style IN ('motel', 'hall', 'suite')),
+       CHECK (style IN ('motel', 'hall', 'suite') OR style IS NULL),
    CONSTRAINT check_single_double
        CHECK (single_double IN ('Single', 'Double')),
    PRIMARY KEY (addr),
