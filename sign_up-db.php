@@ -14,7 +14,7 @@ function addUsers($comp_id, $stu_name, $phone_number, $passwd)
         $statement->bindValue(':comp_id', $comp_id); 
         $statement->bindValue(':stu_name', $stu_name); 
         $statement->bindValue(':phone_number', $phone_number); 
-        $statement->bindValue(':passwd', $hashed);
+        $statement->bindValue(':passwd', $passwd);
         $statement->execute();
         $statement->closeCursor();
 	}
