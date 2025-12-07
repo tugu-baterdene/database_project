@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 <div class="container mt-4">
     <h2>Search for Roommates</h2>
-    <p class="text-muted">Filter by the criteria below.</p>
+    <p class="text-muted">Filter by the criteria below. (Click Search to See All)</p>
 
     <form method="POST" class="row g-3">
 
