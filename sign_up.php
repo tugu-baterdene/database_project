@@ -10,11 +10,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
 	if (!empty($_POST['addBtn'])) 
 	{
-		addUsers($_POST['comp_id'], $_POST['stu_name'], $_POST['phone_number'], $_POST['passwd']);
+		$hashed_password = password_hash($_POST['passwd'], PASSWORD_DEFAULT);
+		addUsers($_POST['comp_id'], $_POST['stu_name'], $_POST['phone_number'], $hashed_password);
 		addPref($_POST['comp_id']);
 		session_start(); 
 		$_SESSION['user_id'] = $_POST['comp_id'];
-		echo "Welcome, " . $_SESSION['user_id'] . "!";
 		header("Location: login.php");
 		exit();
 	}

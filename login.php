@@ -8,17 +8,16 @@ $request_to_update = null;
 <?php 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') 	
 {
-	$user = verifyLogin($_POST['comp_id'], $_POST['passwd']);
-
-		if ($user) {
-			session_start(); // starts session as user and stores it
-			$_SESSION['user_id'] = $_POST['comp_id'];
-			echo "Welcome, " . $_SESSION['user_id'] . "!";
-			header("Location: search.php");
-			exit();
-		} else {
-			echo "Invalid ID or password.";
-		}
+	$hashedPasswd = getPasswd($_POST['comp_id']);
+	if (password_verify($_POST['passwd'], $hashedPasswd)) {
+		session_start(); // starts session as user and stores it
+		$_SESSION['user_id'] = $_POST['comp_id'];
+		echo "Welcome, " . $_SESSION['user_id'] . "!";
+		header("Location: profile.php"); // CHANGE!!!!
+		exit();
+	} else {
+		echo "Invalid ID or password.";
+	}
 }
 ?>
 
