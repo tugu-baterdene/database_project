@@ -2,7 +2,7 @@
 function fetchUser($user_id)
 {
 	global $db;
-	$query = "SELECT comp_id, stu_name, phone_number, passwd, school_year, major, bio FROM users WHERE comp_id = :user_id";
+	$query = "SELECT comp_id, stu_name, phone_number, passwd, school_year, major, status FROM users WHERE comp_id = :user_id";
 	$stmt = $db->prepare($query);
 	$stmt->bindParam(':user_id', $user_id);
 	$stmt->execute();
