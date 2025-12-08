@@ -67,6 +67,10 @@ $status = $user['status'];
                     </div>
                 </div>
 
+                <div class="text-center mt-4">
+                    <a href="profile.php" class="btn btn-dark w-100">View Private Profile</a>
+                </div>
+
             </div>
         </div>
 
@@ -318,10 +322,6 @@ $status = $user['status'];
                 </div>
 
             </div>
-        </div>
-
-		<div class="text-end">
-			<input type="submit" class="btn btn-dark" value="Add to Group" id="addUser" name="addUser" />  
         </div>
 
     </div>

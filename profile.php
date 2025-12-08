@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                 </div>
 
                 <div class="text-center mt-4">
-					<a href="public_profile.php" class="btn btn-dark w-100">View Public Profile</a>
+					<a href="my_public_profile.php" class="btn btn-dark w-100">View Public Profile</a>
                 </div>
 
             </div>
