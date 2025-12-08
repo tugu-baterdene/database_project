@@ -25,13 +25,27 @@ $status = $user['status'];
 ?>
 
 <?php
-if ($_SERVER['REQUEST_METHOD'] == 'POST') 	
-{
-	if (!empty($_POST['addUser']) && ((int) $num_groupmates < (int) $max_groupmates)) 
-    {
-		addToGroup($user['comp_id'], $group['g_id']);
-	}
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $num_groupmates_count = (int) $num_groupmates['COUNT(*)'];
+    $max_groupmates_count = (int) $max_groupmates['num_of_people'];
+
+    if (!empty($_POST['addUser']) && ($num_groupmates_count < $max_groupmates_count)) {
+        addToGroup($user['comp_id'], $group['g_id']);
+        echo "<div class='alert alert-success'>User added to group!</div>";
+
+        // Reload number of groupmates after adding
+        $num_groupmates = fetchNumGroupmates($group['g_id']);
+        $num_groupmates_count = (int) $num_groupmates['COUNT(*)'];
+
+        // If group is now full, update all members' status
+        if ($num_groupmates_count >= $max_groupmates_count) {
+            updateGroupStatus($group['g_id'], 'closed');
+        }
+    } else {
+        echo "<div class='alert alert-danger'>Group is full or invalid.</div>";
+    }
 }
+
 ?>
 
 <!DOCTYPE html>

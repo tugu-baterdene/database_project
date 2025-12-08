@@ -225,4 +225,19 @@ function addToGroup($comp_id, $g_id)
         echo $e->getMessage();
     }
 }
+
+function updateGroupStatus($g_id, $new_status) {
+    $db = getDB();
+    $query = "UPDATE users u
+              JOIN part_of p ON u.comp_id = p.comp_id
+              SET u.status = :new_status
+              WHERE p.g_id = :g_id";
+
+    $stmt = $db->prepare($query);
+    $stmt->bindValue(':new_status', $new_status);
+    $stmt->bindValue(':g_id', $g_id);
+    $stmt->execute();
+    $stmt->closeCursor();
+}
+
 ?>
