@@ -1,7 +1,7 @@
 <?php
 function addUsers($comp_id, $stu_name, $phone_number, $passwd)
 {
-	global $db; 
+	$db = getDB(); 
 	$query = "INSERT INTO users
           SET comp_id = :comp_id,
               stu_name = :stu_name,
@@ -28,7 +28,7 @@ function addUsers($comp_id, $stu_name, $phone_number, $passwd)
 
 function addPref($comp_id)
 {
-	global $db; 
+	$db = getDB();  
 	$query = "INSERT INTO preferences
           SET comp_id = :comp_id";
 	try {
@@ -45,23 +45,9 @@ function addPref($comp_id)
 	}
 }
 
-/*
 function getPasswd($comp_id)
 {
-    global $db;
-    $query = "SELECT passwd FROM users WHERE comp_id = :comp_id";
-    $statement = $db->prepare($query);
-    $statement->bindValue(':comp_id', $comp_id);
-    $statement->execute();
-    $passwd = $statement->fetch(PDO::FETCH_ASSOC); // fetch associative array
-    $statement->closeCursor();
-    return $passwd; // return the string or false if not found
-}
-	*/
-
-function getPasswd($comp_id)
-{
-    global $db;
+    $db = getDB(); 
     $query = "SELECT passwd FROM users WHERE comp_id = :comp_id";
     $statement = $db->prepare($query);
     $statement->bindValue(':comp_id', $comp_id);
@@ -71,18 +57,5 @@ function getPasswd($comp_id)
     $statement->closeCursor();
 
     return $row ? $row['passwd'] : false; // return just the password string or false if not found
-}
-
-
-
-function getAllUsers()
-{
-    global $db;
-	$query = "SELECT * FROM users";
-	$statement = $db->prepare($query);
-	$statement->execute();
-	$results = $statement->fetchAll(); // fetch() gets only onw row; fetchAll() gets all rows
-	$statement->closeCursor();
-	return $results;
 }
 ?>

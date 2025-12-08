@@ -1,7 +1,7 @@
 <?php
 function fetchGroup($user_id)
 {
-	global $db;
+	$db = getDB(); 
 	$query = "SELECT g_id FROM users NATURAL JOIN groups WHERE comp_id = :user_id";
 	$statement = $db->prepare($query);
 	$statement->bindParam(':user_id', $user_id);
@@ -13,7 +13,7 @@ function fetchGroup($user_id)
 
 function fetchLandlord($name, $contact)
 {
-	global $db;
+	$db = getDB(); 
 	$query = "SELECT l_id FROM landlords WHERE name =:name AND contact =:contact";
 	$statement = $db->prepare($query);
 	$statement->bindParam(':name', $name);
@@ -26,7 +26,7 @@ function fetchLandlord($name, $contact)
 
 function addLocation($addr, $bedroom, $bathroom, $on_off_grounds, $price, $extra_cost)
 {
-	global $db; 
+	$db = getDB(); 
 	$query = "INSERT INTO location
           SET addr =:addr,
               bedroom =:bedroom,
@@ -55,7 +55,7 @@ function addLocation($addr, $bedroom, $bathroom, $on_off_grounds, $price, $extra
 
 function addApt($addr, $elevator, $num_of_floors, $balcony, $pets, $smoking)
 {	
-	global $db; 
+	$db = getDB(); 
 	$query = "INSERT INTO apartment
           SET addr =:addr,
               elevator =:elevator,
@@ -84,7 +84,7 @@ function addApt($addr, $elevator, $num_of_floors, $balcony, $pets, $smoking)
 
 function addHouse($addr, $yard, $stories, $porch)
 {
-	global $db; 
+	$db = getDB(); 
 	$query = "INSERT INTO house
           SET addr =:addr,
               yard =:yard,
@@ -109,7 +109,7 @@ function addHouse($addr, $yard, $stories, $porch)
 
 function addDorm($addr, $style, $single_double, $kitchen)
 {
-    global $db; 
+    $db = getDB(); 
 	$query = "INSERT INTO dorm
           SET addr =:addr,
               style =:style,
@@ -134,7 +134,7 @@ function addDorm($addr, $style, $single_double, $kitchen)
 
 function addLandlord($name, $contact) 
 {
-	global $db; 
+	$db = getDB(); 
 	$query = "INSERT INTO landlords
           SET name =:name,
               contact =:contact";
@@ -155,7 +155,7 @@ function addLandlord($name, $contact)
 
 function addOwns($l_id, $addr) 
 {
-    global $db; 
+    $db = getDB(); 
     $query = "INSERT INTO owns 
 		SET l_id =:l_id,
             addr =:addr";
@@ -175,7 +175,7 @@ function addOwns($l_id, $addr)
 }
 
 function checkAddr($addr) {
-    global $db;
+    $db = getDB(); 
     $query = "SELECT * FROM location WHERE addr =:addr";
     $statement = $db->prepare($query);
     $statement->bindValue(':addr', $addr);
@@ -186,7 +186,7 @@ function checkAddr($addr) {
 }
 
 function checkLandlord($name, $contact) {
-    global $db;
+    $db = getDB(); 
 	$query = "SELECT l_id FROM landlords WHERE name =:name AND contact =:contact";
 	$statement = $db->prepare($query);
 	$statement->bindValue(':name', $name);
@@ -198,7 +198,7 @@ function checkLandlord($name, $contact) {
 }
 
 function checkOwns($addr) { // checks for matching landlord given its address
-    global $db;
+    $db = getDB(); 
 	$query = "SELECT l_id FROM owns WHERE addr =:addr";
 	$statement = $db->prepare($query);
 	$statement->bindValue(':addr', $addr);
@@ -211,7 +211,7 @@ function checkOwns($addr) { // checks for matching landlord given its address
 
 function updateLocation($addr, $bedroom, $bathroom, $on_off_grounds, $price, $extra_cost)
 {
-	global $db; 
+	$db = getDB(); 
 	$query = "UPDATE location
 			SET
               bedroom =:bedroom,
@@ -233,7 +233,7 @@ function updateLocation($addr, $bedroom, $bathroom, $on_off_grounds, $price, $ex
 
 function updateApt($addr, $elevator, $num_of_floors, $balcony, $pets, $smoking)
 {	
-	global $db; 
+	$db = getDB(); 
 	$query = "UPDATE apartment
           SET 
               elevator =:elevator,
@@ -255,7 +255,7 @@ function updateApt($addr, $elevator, $num_of_floors, $balcony, $pets, $smoking)
 
 function updateHouse($addr, $yard, $stories, $porch)
 {
-	global $db; 
+	$db = getDB(); 
 	$query = "UPDATE house
           SET 
               yard =:yard,
@@ -273,7 +273,7 @@ function updateHouse($addr, $yard, $stories, $porch)
 
 function updateDorm($addr, $style, $single_double, $kitchen)
 {
-    global $db; 
+    $db = getDB();  
 	$query = "UPDATE dorm
           SET
               style =:style,
@@ -291,7 +291,7 @@ function updateDorm($addr, $style, $single_double, $kitchen)
 
 function updateGroup($g_id, $addr)
 {
-	global $db; 
+	$db = getDB(); 
 	$query = "UPDATE groups
           SET
               addr =:addr
@@ -305,7 +305,7 @@ function updateGroup($g_id, $addr)
 
 function removeOwns($l_id, $addr) 
 {
-    global $db;
+    $db = getDB(); 
     $query = "DELETE FROM owns WHERE l_id = :l_id AND addr = :addr";
     $statement = $db->prepare($query);
     $statement->bindValue(':l_id', $l_id);

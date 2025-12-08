@@ -1,6 +1,6 @@
 <?php
-require('connect-db.php');
-require('groups-db.php');
+require_once('connect-db.php');
+require_once('groups-db.php');
 include('header.php');
 
 if (!isset($_SESSION['user_id'])) {
@@ -72,7 +72,7 @@ $hasGroup = !empty($userGroup);
             <div class="text-center py-5">
                 <h4 class="mb-3">You are not currently in a group.</h4>
                 <p class="text-muted">Create a group and add your property details to get started.</p>
-                <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#createGroupModal">
+                <button type="button" class="btn btn-dark btn-lg" data-bs-toggle="modal" data-bs-target="#createGroupModal">
                     Create New Group
                 </button>
             </div>
@@ -258,7 +258,7 @@ $hasGroup = !empty($userGroup);
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" name="createGroupBtn" class="btn btn-primary">Create Group</button>
+            <button type="submit" name="createGroupBtn" class="btn btn-dark">Create Group</button>
           </div>
       </form>
     </div>

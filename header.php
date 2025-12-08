@@ -48,11 +48,8 @@
           <li class="nav-item">
             <a class="nav-link" href="search.php">Search</a>
           </li>
-		  <li class="nav-item">
-            <a class="nav-link" href="search.php">My Roommates</a>
-          </li>
           <li class="nav-item">
-            <a class="nav-link" href="groups.php">My Groups</a>
+            <a class="nav-link" href="groups.php">My Group</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="profile.php">My Profile</a>

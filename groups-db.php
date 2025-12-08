@@ -1,7 +1,7 @@
 <?php
 
 function fetchUserGroups($user_id) {
-    global $db;
+    $db = getDB(); 
     $query = "SELECT g.g_id, g.status, g.num_of_people, g.addr 
               FROM part_of p
               JOIN groups g ON p.g_id = g.g_id 
@@ -15,7 +15,7 @@ function fetchUserGroups($user_id) {
 }
 
 function fetchGroupDetails($g_id) {
-    global $db;
+    $db = getDB(); 
     $query = "SELECT * FROM groups WHERE g_id = :g_id";
     $statement = $db->prepare($query);
     $statement->bindParam(':g_id', $g_id);
@@ -24,7 +24,7 @@ function fetchGroupDetails($g_id) {
 }
 
 function fetchGroupMembers($g_id) {
-    global $db;
+    $db = getDB(); 
     $query = "SELECT u.comp_id, u.stu_name, u.status 
               FROM users u 
               JOIN part_of p ON u.comp_id = p.comp_id 
@@ -36,7 +36,7 @@ function fetchGroupMembers($g_id) {
 }
 
 function leaveGroup($user_id, $g_id) {
-    global $db;
+    $db = getDB(); 
     try {
         $query = "DELETE FROM part_of WHERE comp_id = :user_id AND g_id = :g_id";
         $statement = $db->prepare($query);
@@ -70,7 +70,7 @@ function leaveGroup($user_id, $g_id) {
 }
 
 function updateGroupStatus($g_id, $status) {
-    global $db;
+    $db = getDB(); 
     $query = "UPDATE groups SET status = :status WHERE g_id = :g_id";
     $statement = $db->prepare($query);
     $statement->bindValue(':status', $status);
@@ -79,7 +79,7 @@ function updateGroupStatus($g_id, $status) {
 }
 
 function createGroupWithProperty($user_id, $status, $addr, $size, $type, $details, $landlord_name, $landlord_email) {
-    global $db;
+    $db = getDB(); 
 
     try {
         $db->beginTransaction();

@@ -5,20 +5,33 @@ require_once('profile-db.php');
 include('header.php'); 
 
 if (!isset($_SESSION['user_id'])) {
-    header("Location: sign_in.php");
+    header("Location: login.php");
     exit();
 } 
 
 if (isset($_GET['comp_id'])) {
     $user_id = $_GET['comp_id']; 
+	$curr_user_id = $_SESSION['user_id'];
 } else {
     $user_id = $_SESSION['user_id']; 
 }
 $user = fetchUser($user_id);
 $pref = fetchPref($user_id);
+$group = fetchGroup($curr_user_id);
+$num_groupmates = fetchNumGroupmates($group['g_id']);
+$max_groupmates = fetchGroupMax($group['g_id']);
 $location = fetchLocation($user_id);
 $status = $user['status'];
+?>
 
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST') 	
+{
+	if (!empty($_POST['addUser']) && ((int) $num_groupmates < (int) $max_groupmates)) 
+    {
+		addToGroup($user['comp_id'], $group['g_id']);
+	}
+}
 ?>
 
 <!DOCTYPE html>
@@ -320,8 +333,11 @@ $status = $user['status'];
         </div>
 
 		<div class="text-end">
-			<input type="submit" class="btn btn-dark" value="Add to Group" id="addUser" name="addUser" />  
-        </div>
+			<form method="post" action="">
+				<input type="submit" class="btn btn-dark" value="Add to Group" id="addUser" name="addUser" />
+			</form>
+		</div>
+
 
     </div>
 
