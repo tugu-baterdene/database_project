@@ -325,8 +325,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') 	 // check if addr AND/OR landlord is 
                                 <div class="col-md-12">
                                     <label>Address</label>
                                     <input type="text" class="form-control" id='addr_h' name='addr_h' required
-										value="<?php if ($location['addr'] !=null) echo $location['addr']; ?>" 
-										onclick="window.location.href='search.php'">
+										value="<?php if ($location['addr'] !=null) echo $location['addr']; ?>">
                                 </div>
                             </div>
 							<div class="row mb-3">
