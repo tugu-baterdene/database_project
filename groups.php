@@ -18,36 +18,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $addr   = $_POST['addr'] ?? null;
         $type   = $_POST['property_type'] ?? 'none';
         
+        $lname  = $_POST['landlord_name'] ?? '';
+        $lemail = $_POST['landlord_email'] ?? '';
+        
         $details = [
             'bedroom' => !empty($_POST['bedroom']) ? $_POST['bedroom'] : 1,
             'bathroom'=> !empty($_POST['bathroom']) ? $_POST['bathroom'] : 1,
             'price'   => !empty($_POST['price']) ? $_POST['price'] : 0,
-            
-            // Apartment
             'elevator' => isset($_POST['elevator']) ? 1 : 0,
             'floors'   => !empty($_POST['num_of_floors']) ? $_POST['num_of_floors'] : 1,
             'balcony'  => isset($_POST['balcony']) ? 1 : 0,
             'pets'     => isset($_POST['pets']) ? 1 : 0,
             'smoking'  => isset($_POST['smoking']) ? 1 : 0,
-            
-            // House
             'yard'     => isset($_POST['yard']) ? 1 : 0,
             'stories'  => !empty($_POST['stories']) ? $_POST['stories'] : 1,
             'porch'    => isset($_POST['porch']) ? 1 : 0,
-            
-            // Dorm
             'style'         => $_POST['dorm_style'] ?? 'Hall',
             'single_double' => $_POST['single_double'] ?? 'Single',
             'kitchen'       => isset($_POST['kitchen']) ? 1 : 0
         ];
 
-        createGroupWithProperty($user_id, $status, $addr, $size, $type, $details);
+        createGroupWithProperty($user_id, $status, $addr, $size, $type, $details, $lname, $lemail);
         
         header("Location: groups.php");
         exit();
     }
 
-    // 2. Leave Group Logic
     if (isset($_POST['leaveGroupBtn'])) {
         leaveGroup($user_id, $_POST['g_id']);
         header("Location: groups.php");
@@ -147,6 +143,18 @@ $hasGroup = !empty($userGroup);
                     </div>
                 </div>
 
+                <h6 class="text-primary border-bottom pb-2 mt-4">Landlord Details</h6>
+                <div class="row mb-3">
+                    <div class="col">
+                        <label class="form-label">Landlord Name</label>
+                        <input type="text" class="form-control" name="landlord_name" placeholder="Name">
+                    </div>
+                    <div class="col">
+                        <label class="form-label">Landlord Email</label>
+                        <input type="email" class="form-control" name="landlord_email" placeholder="Email">
+                    </div>
+                </div>
+
                 <h6 class="text-primary border-bottom pb-2 mt-4">Property Address</h6>
                 <div class="mb-3">
                     <label class="form-label">Address (Required)</label>
@@ -229,18 +237,15 @@ $hasGroup = !empty($userGroup);
 function togglePropertyFields() {
     var type = document.getElementById('propertyTypeSelector').value;
     
-    // Hide all first
     document.getElementById('genericFields').style.display = 'none';
     document.getElementById('aptFields').style.display = 'none';
     document.getElementById('houseFields').style.display = 'none';
     document.getElementById('dormFields').style.display = 'none';
 
-    // Show Generic if any type is selected
     if (type !== 'none') {
         document.getElementById('genericFields').style.display = 'block';
     }
 
-    // Show specific
     if (type === 'apartment') {
         document.getElementById('aptFields').style.display = 'block';
     } else if (type === 'house') {

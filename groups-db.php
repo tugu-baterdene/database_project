@@ -55,7 +55,7 @@ function leaveGroup($user_id, $g_id) {
     }
 }
 
-function createGroupWithProperty($user_id, $status, $addr, $size, $type, $details) {
+function createGroupWithProperty($user_id, $status, $addr, $size, $type, $details, $landlord_name, $landlord_email) {
     global $db;
 
     try {
@@ -66,8 +66,15 @@ function createGroupWithProperty($user_id, $status, $addr, $size, $type, $detail
         $stmtDel->bindValue(':user_id', $user_id);
         $stmtDel->execute();
 
+        if (!empty($landlord_name)) {
+            $landQuery = "INSERT INTO landlords (name, contact) VALUES (:name, :contact)";
+            $stmtLand = $db->prepare($landQuery);
+            $stmtLand->bindValue(':name', $landlord_name);
+            $stmtLand->bindValue(':contact', $landlord_email);
+            $stmtLand->execute();
+        }
+
         if (!empty($addr)) {
-            // Check if address already exists to avoid duplicates
             $checkQuery = "SELECT COUNT(*) FROM location WHERE addr = :addr";
             $stmtCheck = $db->prepare($checkQuery);
             $stmtCheck->bindValue(':addr', $addr);
