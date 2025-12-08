@@ -43,7 +43,6 @@ function fetchGroupMembers($g_id) {
 function leaveGroup($user_id, $g_id) {
     $db = getDB(); 
     try {
-        // Remove user from group
         $query = "DELETE FROM part_of WHERE comp_id = :user_id AND g_id = :g_id";
         $statement = $db->prepare($query);
         $statement->bindParam(':user_id', $user_id);
@@ -51,7 +50,12 @@ function leaveGroup($user_id, $g_id) {
         $statement->execute();
         $statement->closeCursor();
 
-        // Fetch group data
+        $userStatusQ = "UPDATE users SET status = 'searching' WHERE comp_id = :user_id";
+        $stmtU = $db->prepare($userStatusQ);
+        $stmtU->bindValue(':user_id', $user_id);
+        $stmtU->execute();
+        $stmtU->closeCursor();
+
         $qGroup = "SELECT num_of_people, status FROM groups WHERE g_id = :g_id";
         $stmtG = $db->prepare($qGroup);
         $stmtG->bindParam(':g_id', $g_id);
@@ -59,7 +63,6 @@ function leaveGroup($user_id, $g_id) {
         $groupData = $stmtG->fetch(PDO::FETCH_ASSOC);
         $stmtG->closeCursor();
 
-        // Count current group members
         $qCount = "SELECT COUNT(*) FROM part_of WHERE g_id = :g_id";
         $stmtC = $db->prepare($qCount);
         $stmtC->bindParam(':g_id', $g_id);
@@ -67,7 +70,6 @@ function leaveGroup($user_id, $g_id) {
         $currentCount = $stmtC->fetchColumn();
         $stmtC->closeCursor();
 
-        // Update group status if needed
         if ($groupData && $groupData['status'] === 'Closed' && $currentCount < $groupData['num_of_people']) {
             $updateQ = "UPDATE groups SET status = 'Searching' WHERE g_id = :g_id";
             $stmtUp = $db->prepare($updateQ);
@@ -97,7 +99,7 @@ function createGroupWithProperty($user_id, $status, $addr, $size, $type, $detail
     try {
         $db->beginTransaction();
 
-        // Remove user from existing group
+        // Remove user from any existing grou
         $delQuery = "DELETE FROM part_of WHERE comp_id = :user_id";
         $stmtDel = $db->prepare($delQuery);
         $stmtDel->bindValue(':user_id', $user_id);
@@ -192,6 +194,12 @@ function createGroupWithProperty($user_id, $status, $addr, $size, $type, $detail
         $stmtPart->execute();
         $stmtPart->closeCursor();
 
+        $userStatusQ = "UPDATE users SET status = 'closed' WHERE comp_id = :comp_id";
+        $stmtU = $db->prepare($userStatusQ);
+        $stmtU->bindValue(':comp_id', $user_id);
+        $stmtU->execute();
+        $stmtU->closeCursor();
+
         $db->commit();
         return $new_g_id;
 
@@ -200,5 +208,4 @@ function createGroupWithProperty($user_id, $status, $addr, $size, $type, $detail
         die("Database Error: " . $e->getMessage());
     }
 }
-
 ?>
