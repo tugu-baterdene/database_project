@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     if (isset($_POST['createGroupBtn'])) {
         $status = $_POST['group_status'] ?? 'Searching';
-        $size   = $_POST['num_of_people'] ?? 1;
+        $size   = $_POST['num_of_people'] ?? 1; // This is the Target Capacity
         $addr   = $_POST['addr'] ?? null;
         $type   = $_POST['property_type'] ?? 'none';
         
@@ -82,11 +82,42 @@ $hasGroup = !empty($userGroup);
                 $groupRow = $userGroup[0]; 
                 $group = fetchGroupDetails($groupRow['g_id']); 
                 $members = fetchGroupMembers($groupRow['g_id']); 
+
+                // --- LOGIC UPDATED FOR TARGET SIZE ---
+                $currentSize = count($members);        // Actual people in the group
+                $targetSize = (int)$group['num_of_people']; // The intended capacity
+
+                // If the group is full (Current >= Target) and not yet marked Closed
+                if ($group['status'] !== 'Closed' && $currentSize >= $targetSize) {
+                    updateGroupStatus($group['g_id'], 'Closed');
+                    $group['status'] = 'Closed'; // Reflect change immediately
+                }
+                
+                // Optional: If you want to re-open if someone leaves
+                // if ($group['status'] == 'Closed' && $currentSize < $targetSize) {
+                //     updateGroupStatus($group['g_id'], 'Searching');
+                //     $group['status'] = 'Searching';
+                // }
             ?>
             <div class="row">
                 <div class="col-md-7">
                     <h4>Group #<?php echo $group['g_id']; ?></h4>
-                    <p><strong>Status:</strong> <span class="badge bg-info text-dark"><?php echo htmlspecialchars($group['status']); ?></span></p>
+                    
+                    <p>
+                        <strong>Status:</strong> 
+                        <span class="badge <?php echo ($group['status'] == 'Closed') ? 'bg-danger' : 'bg-info text-dark'; ?>">
+                            <?php echo htmlspecialchars($group['status']); ?>
+                        </span>
+                    </p>
+                    
+                    <p class="mb-1"><strong>Capacity:</strong> <?php echo $currentSize . " / " . $targetSize; ?> Members</p>
+                    <div class="progress mb-3" style="height: 15px;">
+                        <div class="progress-bar <?php echo ($currentSize >= $targetSize) ? 'bg-success' : 'bg-primary'; ?>" 
+                             role="progressbar" 
+                             style="width: <?php echo ($targetSize > 0) ? ($currentSize / $targetSize) * 100 : 0; ?>%;">
+                        </div>
+                    </div>
+
                     <p><strong>Address:</strong> <?php echo htmlspecialchars($group['addr'] ?? 'No Address Assigned'); ?></p>
                     
                     <hr>
@@ -138,8 +169,9 @@ $hasGroup = !empty($userGroup);
                         </select>
                     </div>
                     <div class="col">
-                        <label class="form-label">Num of People</label>
-                        <input type="number" class="form-control" name="num_of_people" value="1" min="1">
+                        <label class="form-label">Target Group Size</label>
+                        <input type="number" class="form-control" name="num_of_people" value="1" min="1" placeholder="Total Capacity">
+                        <div class="form-text">How many total people do you want in this group?</div>
                     </div>
                 </div>
 

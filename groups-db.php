@@ -44,15 +44,38 @@ function leaveGroup($user_id, $g_id) {
         $statement->bindParam(':g_id', $g_id);
         $statement->execute();
 
-        $query2 = "UPDATE groups SET num_of_people = num_of_people - 1 WHERE g_id = :g_id";
-        $statement2 = $db->prepare($query2);
-        $statement2->bindParam(':g_id', $g_id);
-        $statement2->execute();
+        $qGroup = "SELECT num_of_people, status FROM groups WHERE g_id = :g_id";
+        $stmtG = $db->prepare($qGroup);
+        $stmtG->bindParam(':g_id', $g_id);
+        $stmtG->execute();
+        $groupData = $stmtG->fetch(PDO::FETCH_ASSOC);
+
+        $qCount = "SELECT COUNT(*) FROM part_of WHERE g_id = :g_id";
+        $stmtC = $db->prepare($qCount);
+        $stmtC->bindParam(':g_id', $g_id);
+        $stmtC->execute();
+        $currentCount = $stmtC->fetchColumn();
+
+        if ($groupData && $groupData['status'] === 'Closed' && $currentCount < $groupData['num_of_people']) {
+            $updateQ = "UPDATE groups SET status = 'Searching' WHERE g_id = :g_id";
+            $stmtUp = $db->prepare($updateQ);
+            $stmtUp->bindParam(':g_id', $g_id);
+            $stmtUp->execute();
+        }
 
         return true;
     } catch (PDOException $e) {
         return false;
     }
+}
+
+function updateGroupStatus($g_id, $status) {
+    global $db;
+    $query = "UPDATE groups SET status = :status WHERE g_id = :g_id";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':status', $status);
+    $statement->bindValue(':g_id', $g_id);
+    $statement->execute();
 }
 
 function createGroupWithProperty($user_id, $status, $addr, $size, $type, $details, $landlord_name, $landlord_email) {
