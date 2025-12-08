@@ -186,3 +186,9 @@ BEGIN
 END //
 
 DELIMITER ;
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON rgp3qv.* TO 'azr7je_a'@'%';
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON rgp3qv.* TO 'yay6mu_a'@'%';
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON rgp3qv.* TO 'fnf8eh_a'@'%';
