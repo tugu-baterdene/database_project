@@ -1,0 +1,52 @@
+
+body {
+    background-color: #f8f9fa; 
+}
+
+.profile-container {
+    max-width: 1200px;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+.profile-content {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
+}
+
+form label {
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 6px;
+}
+
+.nav-tabs {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.nav-tabs .nav-link {
+    color: #555;
+    border: none;
+    background: transparent;
+    font-weight: 500;
+}
+
+.nav-tabs .nav-link.active {
+    color: #007bff;
+    font-weight: 700;
+    border-bottom: 2px solid #007bff;
+}
+
+.list-group-item {
+    border: 1px solid #eee;
+    margin-bottom: 5px;
+    border-radius: 6px !important;
+}
+
+.badge {
+    font-weight: 500;
+    padding: 0.5em 0.8em;
+}
