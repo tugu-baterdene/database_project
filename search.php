@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <select name="status" class="form-select">
                 <option value="">Any</option>
                 <option value="searching">Searching for roommates</option>
-                <option value="found">Roommate found</option>
+                <option value="closed">Closed</option>
             </select>
         </div>
 
