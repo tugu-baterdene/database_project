@@ -8,6 +8,7 @@ function fetchGroup($user_id)
 	$statement->execute();
 
 	$group = $statement->fetch(PDO::FETCH_ASSOC); // $user now contains user's info
+	$statement->closeCursor();
 	return $group;
 }
 
@@ -21,6 +22,7 @@ function fetchLandlord($name, $contact)
 	$statement->execute();
 
 	$location = $statement->fetch(PDO::FETCH_ASSOC);
+	$statement->closeCursor();
 	return $location;
 }
 
@@ -204,6 +206,7 @@ function checkOwns($addr) { // checks for matching landlord given its address
 	$statement->bindValue(':addr', $addr);
 	$statement->execute();
 	$curr_lid = $statement->fetch(PDO::FETCH_ASSOC);
+	$statement->closeCursor();
 
     // fetchColumn returns false if no row exists
     return $curr_lid;

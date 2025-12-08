@@ -11,6 +11,7 @@ function fetchUserGroups($user_id) {
     $statement->bindParam(':user_id', $user_id);
     $statement->execute();
     $group = $statement->fetch(PDO::FETCH_ASSOC);
+	$statement->closeCursor();
     return $group ? [$group] : [];
 }
 
@@ -20,7 +21,9 @@ function fetchGroupDetails($g_id) {
     $statement = $db->prepare($query);
     $statement->bindParam(':g_id', $g_id);
     $statement->execute();
-    return $statement->fetch(PDO::FETCH_ASSOC);
+	$group_details = $statement->fetch(PDO::FETCH_ASSOC);
+	$statement->closeCursor();
+    return $group_details;
 }
 
 function fetchGroupMembers($g_id) {
@@ -32,7 +35,9 @@ function fetchGroupMembers($g_id) {
     $statement = $db->prepare($query);
     $statement->bindParam(':g_id', $g_id);
     $statement->execute();
-    return $statement->fetchAll(PDO::FETCH_ASSOC);
+	$group_mem = $statement->fetchAll(PDO::FETCH_ASSOC);
+	$statement->closeCursor();
+    return $group_mem;
 }
 
 function leaveGroup($user_id, $g_id) {
@@ -76,6 +81,7 @@ function updateGroupStatus($g_id, $status) {
     $statement->bindValue(':status', $status);
     $statement->bindValue(':g_id', $g_id);
     $statement->execute();
+	$statement->closeCursor();
 }
 
 function createGroupWithProperty($user_id, $status, $addr, $size, $type, $details, $landlord_name, $landlord_email) {

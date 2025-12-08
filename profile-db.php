@@ -8,6 +8,7 @@ function fetchUser($user_id)
 	$stmt->execute();
 
 	$user = $stmt->fetch(PDO::FETCH_ASSOC); // $user now contains user's info
+	$stmt->closeCursor();
 	return $user;
 }
 
@@ -20,6 +21,7 @@ function fetchPref($user_id)
 	$stmt->execute();
 
 	$pref = $stmt->fetch(PDO::FETCH_ASSOC);
+	$stmt->closeCursor();
 	return $pref;
 }
 
@@ -34,8 +36,9 @@ function fetchGroup($user_id)
     $stmt = $db->prepare($query);
     $stmt->bindValue(':user_id', $user_id);
     $stmt->execute();
-
-    return $stmt->fetch(PDO::FETCH_ASSOC);
+	$group = $stmt->fetch(PDO::FETCH_ASSOC);
+	$stmt->closeCursor();
+    return $group;
 }
 
 function fetchNumGroupmates($g_id)
@@ -49,8 +52,9 @@ function fetchNumGroupmates($g_id)
     $stmt = $db->prepare($query);
     $stmt->bindValue(':g_id', $g_id);
     $stmt->execute();
-
-    return $stmt->fetch(PDO::FETCH_ASSOC);
+	$group_num = $stmt->fetch(PDO::FETCH_ASSOC);
+	$stmt->closeCursor();
+    return $group_num;
 }
 
 
@@ -65,8 +69,9 @@ function fetchGroupMax($g_id)
     $stmt = $db->prepare($query);
     $stmt->bindValue(':g_id', $g_id);
     $stmt->execute();
-
-    return $stmt->fetch(PDO::FETCH_ASSOC);
+	$group_max = $stmt->fetch(PDO::FETCH_ASSOC);
+	$stmt->closeCursor();
+    return $group_max;
 }
 
 function fetchLocation($user_id)
@@ -84,8 +89,9 @@ function fetchLocation($user_id)
     $stmt = $db->prepare($query);
     $stmt->bindValue(':user_id', $user_id);
     $stmt->execute();
-
-    return $stmt->fetch(PDO::FETCH_ASSOC);
+	$location = $stmt->fetch(PDO::FETCH_ASSOC);
+	$stmt->closeCursor();
+    return $location;
 }
 
 function fetchStatus($user_id)
@@ -98,6 +104,7 @@ function fetchStatus($user_id)
 	$stmt->execute();
 
 	$status = $stmt->fetch(PDO::FETCH_ASSOC);
+	$stmt->closeCursor();
 	return $status;
 }
 
