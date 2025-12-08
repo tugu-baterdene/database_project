@@ -44,7 +44,7 @@ $status = $user['status'];
             <div class="profile-card p-4">
 
                 <div class="text-center mb-3">
-                    <img src="https://via.placeholder.com/140" class="rounded-circle profile-img">
+                    <img src="uva_profile.png" class="rounded-circle profile-img">
                 </div>
 
                 <h4 class="text-center"><?php echo htmlspecialchars($user['stu_name']); ?></h4>
