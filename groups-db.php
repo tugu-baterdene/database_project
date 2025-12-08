@@ -11,7 +11,7 @@ function fetchUserGroups($user_id) {
     $statement->bindParam(':user_id', $user_id);
     $statement->execute();
     $group = $statement->fetch(PDO::FETCH_ASSOC);
-	$statement->closeCursor();
+    $statement->closeCursor();
     return $group ? [$group] : [];
 }
 
@@ -21,8 +21,8 @@ function fetchGroupDetails($g_id) {
     $statement = $db->prepare($query);
     $statement->bindParam(':g_id', $g_id);
     $statement->execute();
-	$group_details = $statement->fetch(PDO::FETCH_ASSOC);
-	$statement->closeCursor();
+    $group_details = $statement->fetch(PDO::FETCH_ASSOC);
+    $statement->closeCursor();
     return $group_details;
 }
 
@@ -35,37 +35,45 @@ function fetchGroupMembers($g_id) {
     $statement = $db->prepare($query);
     $statement->bindParam(':g_id', $g_id);
     $statement->execute();
-	$group_mem = $statement->fetchAll(PDO::FETCH_ASSOC);
-	$statement->closeCursor();
+    $group_mem = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $statement->closeCursor();
     return $group_mem;
 }
 
 function leaveGroup($user_id, $g_id) {
     $db = getDB(); 
     try {
+        // Remove user from group
         $query = "DELETE FROM part_of WHERE comp_id = :user_id AND g_id = :g_id";
         $statement = $db->prepare($query);
         $statement->bindParam(':user_id', $user_id);
         $statement->bindParam(':g_id', $g_id);
         $statement->execute();
+        $statement->closeCursor();
 
+        // Fetch group data
         $qGroup = "SELECT num_of_people, status FROM groups WHERE g_id = :g_id";
         $stmtG = $db->prepare($qGroup);
         $stmtG->bindParam(':g_id', $g_id);
         $stmtG->execute();
         $groupData = $stmtG->fetch(PDO::FETCH_ASSOC);
+        $stmtG->closeCursor();
 
+        // Count current group members
         $qCount = "SELECT COUNT(*) FROM part_of WHERE g_id = :g_id";
         $stmtC = $db->prepare($qCount);
         $stmtC->bindParam(':g_id', $g_id);
         $stmtC->execute();
         $currentCount = $stmtC->fetchColumn();
+        $stmtC->closeCursor();
 
+        // Update group status if needed
         if ($groupData && $groupData['status'] === 'Closed' && $currentCount < $groupData['num_of_people']) {
             $updateQ = "UPDATE groups SET status = 'Searching' WHERE g_id = :g_id";
             $stmtUp = $db->prepare($updateQ);
             $stmtUp->bindParam(':g_id', $g_id);
             $stmtUp->execute();
+            $stmtUp->closeCursor();
         }
 
         return true;
@@ -81,34 +89,39 @@ function updateGroupStatus($g_id, $status) {
     $statement->bindValue(':status', $status);
     $statement->bindValue(':g_id', $g_id);
     $statement->execute();
-	$statement->closeCursor();
+    $statement->closeCursor();
 }
 
 function createGroupWithProperty($user_id, $status, $addr, $size, $type, $details, $landlord_name, $landlord_email) {
     $db = getDB(); 
-
     try {
         $db->beginTransaction();
 
+        // Remove user from existing group
         $delQuery = "DELETE FROM part_of WHERE comp_id = :user_id";
         $stmtDel = $db->prepare($delQuery);
         $stmtDel->bindValue(':user_id', $user_id);
         $stmtDel->execute();
+        $stmtDel->closeCursor();
 
+        // Add landlord if provided
         if (!empty($landlord_name)) {
             $landQuery = "INSERT INTO landlords (name, contact) VALUES (:name, :contact)";
             $stmtLand = $db->prepare($landQuery);
             $stmtLand->bindValue(':name', $landlord_name);
             $stmtLand->bindValue(':contact', $landlord_email);
             $stmtLand->execute();
+            $stmtLand->closeCursor();
         }
 
+        // Add location if provided
         if (!empty($addr)) {
             $checkQuery = "SELECT COUNT(*) FROM location WHERE addr = :addr";
             $stmtCheck = $db->prepare($checkQuery);
             $stmtCheck->bindValue(':addr', $addr);
             $stmtCheck->execute();
             $exists = $stmtCheck->fetchColumn();
+            $stmtCheck->closeCursor();
 
             if (!$exists) {
                 $onOff = ($type === 'dorm') ? 'On' : 'Off';
@@ -123,6 +136,7 @@ function createGroupWithProperty($user_id, $status, $addr, $size, $type, $detail
                 $stmtLoc->bindValue(':price', $details['price']);
                 $stmtLoc->bindValue(':extra', 'None');
                 $stmtLoc->execute();
+                $stmtLoc->closeCursor();
 
                 if ($type === 'apartment') {
                     $aptQuery = "INSERT INTO apartment (addr, elevator, num_of_floors, balcony, pets, smoking)
@@ -135,8 +149,8 @@ function createGroupWithProperty($user_id, $status, $addr, $size, $type, $detail
                     $stmtApt->bindValue(':pets', $details['pets']);
                     $stmtApt->bindValue(':smoke', $details['smoking']);
                     $stmtApt->execute();
-                } 
-                elseif ($type === 'house') {
+                    $stmtApt->closeCursor();
+                } elseif ($type === 'house') {
                     $houseQuery = "INSERT INTO house (addr, yard, stories, porch)
                                    VALUES (:addr, :yard, :stories, :porch)";
                     $stmtHouse = $db->prepare($houseQuery);
@@ -145,8 +159,8 @@ function createGroupWithProperty($user_id, $status, $addr, $size, $type, $detail
                     $stmtHouse->bindValue(':stories', $details['stories']);
                     $stmtHouse->bindValue(':porch', $details['porch']);
                     $stmtHouse->execute();
-                } 
-                elseif ($type === 'dorm') {
+                    $stmtHouse->closeCursor();
+                } elseif ($type === 'dorm') {
                     $dormQuery = "INSERT INTO dorm (addr, style, single_double, kitchen)
                                   VALUES (:addr, :style, :sd, :kitchen)";
                     $stmtDorm = $db->prepare($dormQuery);
@@ -155,24 +169,28 @@ function createGroupWithProperty($user_id, $status, $addr, $size, $type, $detail
                     $stmtDorm->bindValue(':sd', $details['single_double']);
                     $stmtDorm->bindValue(':kitchen', $details['kitchen']);
                     $stmtDorm->execute();
+                    $stmtDorm->closeCursor();
                 }
             }
         }
 
+        // Insert new group
         $grpQuery = "INSERT INTO groups (status, num_of_people, addr) VALUES (:status, :num, :addr)";
         $stmtGrp = $db->prepare($grpQuery);
         $stmtGrp->bindValue(':status', $status);
         $stmtGrp->bindValue(':num', $size);
         $stmtGrp->bindValue(':addr', $addr);
         $stmtGrp->execute();
-        
         $new_g_id = $db->lastInsertId();
+        $stmtGrp->closeCursor();
 
+        // Add user to new group
         $partQuery = "INSERT INTO part_of (comp_id, g_id) VALUES (:comp_id, :g_id)";
         $stmtPart = $db->prepare($partQuery);
         $stmtPart->bindValue(':comp_id', $user_id);
         $stmtPart->bindValue(':g_id', $new_g_id);
         $stmtPart->execute();
+        $stmtPart->closeCursor();
 
         $db->commit();
         return $new_g_id;
@@ -182,4 +200,5 @@ function createGroupWithProperty($user_id, $status, $addr, $size, $type, $detail
         die("Database Error: " . $e->getMessage());
     }
 }
+
 ?>
