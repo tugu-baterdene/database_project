@@ -152,14 +152,14 @@ $hasGroup = !empty($userGroup);
 <div class="modal fade" id="createGroupModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <div class="modal-header bg-primary text-white">
+      <div class="modal-header bg-dark text-white">
         <h5 class="modal-title">Create Group & Property</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form method="POST">
           <div class="modal-body">
                 
-                <h6 class="text-primary border-bottom pb-2">Group Details</h6>
+                <h6 class="text-dark border-bottom pb-2">Group Details</h6>
                 <div class="row mb-3">
                     <div class="col">
                         <label class="form-label">Group Status</label>
@@ -175,7 +175,7 @@ $hasGroup = !empty($userGroup);
                     </div>
                 </div>
 
-                <h6 class="text-primary border-bottom pb-2 mt-4">Landlord Details</h6>
+                <h6 class="text-dark border-bottom pb-2 mt-4">Landlord Details</h6>
                 <div class="row mb-3">
                     <div class="col">
                         <label class="form-label">Landlord Name</label>
@@ -187,7 +187,7 @@ $hasGroup = !empty($userGroup);
                     </div>
                 </div>
 
-                <h6 class="text-primary border-bottom pb-2 mt-4">Property Address</h6>
+                <h6 class="text-dark border-bottom pb-2 mt-4">Property Address</h6>
                 <div class="mb-3">
                     <label class="form-label">Address (Required)</label>
                     <input type="text" class="form-control" name="addr" placeholder="e.g. 123 Main St..." required>
