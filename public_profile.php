@@ -265,8 +265,7 @@ $status = $user['status'];
                                 <div class="col-md-12">
                                     <label>Address</label>
                                     <input type="text" class="form-control" id='addr' name='addr'
-										value="<?php if ($location['addr'] !=null) echo $location['addr']; ?>" readonly
-										onclick="window.location.href='location.php'">
+										value="<?php if ($location['addr'] !=null) echo $location['addr']; ?>" readonly>
                                 </div>
                             </div>
 							<div class="row mb-3">
