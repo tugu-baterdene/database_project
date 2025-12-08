@@ -107,14 +107,30 @@ function createGroupWithProperty($user_id, $status, $addr, $size, $type, $detail
         $stmtDel->closeCursor();
 
         // Add landlord if provided
-        if (!empty($landlord_name)) {
-            $landQuery = "INSERT INTO landlords (name, contact) VALUES (:name, :contact)";
-            $stmtLand = $db->prepare($landQuery);
-            $stmtLand->bindValue(':name', $landlord_name);
-            $stmtLand->bindValue(':contact', $landlord_email);
-            $stmtLand->execute();
-            $stmtLand->closeCursor();
-        }
+		$landlord_id = null;
+		if (!empty($landlord_name)) {
+
+			// 1. Check if this landlord already exists
+			$checkLand = "SELECT l_id FROM landlords WHERE name = :name OR contact = :contact LIMIT 1";
+			$stmtCheckLand = $db->prepare($checkLand);
+			$stmtCheckLand->bindValue(':name', $landlord_name);
+			$stmtCheckLand->bindValue(':contact', $landlord_email);
+			$stmtCheckLand->execute();
+			$landlord_id = $stmtCheckLand->fetchColumn();
+			$stmtCheckLand->closeCursor();
+
+			// 2. If no existing landlord, add a new one
+			if (!$landlord_id) {
+				$landQuery = "INSERT INTO landlords (name, contact) VALUES (:name, :contact)";
+				$stmtLand = $db->prepare($landQuery);
+				$stmtLand->bindValue(':name', $landlord_name);
+				$stmtLand->bindValue(':contact', $landlord_email);
+				$stmtLand->execute();
+				$landlord_id = $db->lastInsertId();
+				$stmtLand->closeCursor();
+			}
+		}
+
 
         // Add location if provided
         if (!empty($addr)) {
