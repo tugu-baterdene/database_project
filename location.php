@@ -1,6 +1,6 @@
 <?php
-require('connect-db.php');
-require('location-db.php');
+require_once('connect-db.php');
+require_once('location-db.php');
 include('header.php'); 
 
 if (!isset($_SESSION['user_id'])) {

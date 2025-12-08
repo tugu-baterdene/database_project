@@ -1,7 +1,7 @@
 <?php
 session_start();
-include('connect-db.php'); // your DB connection
-require('profile-db.php');
+require_once('connect-db.php'); // your DB connection
+require_once('profile-db.php');
 include('header.php'); 
 
 if (!isset($_SESSION['user_id'])) {

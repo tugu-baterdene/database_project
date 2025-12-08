@@ -1,6 +1,6 @@
 <?php 
-require('connect-db.php');
-require('sign_up-db.php');
+require_once('connect-db.php');
+require_once('sign_up-db.php');
 
 $request_to_update = null;
 ?> 

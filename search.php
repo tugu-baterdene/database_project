@@ -1,6 +1,6 @@
 <?php
-require('connect-db.php');
-require('search-db.php');
+require_once('connect-db.php');
+require_once('search-db.php');
 include('header.php');
 
 $results = [];
